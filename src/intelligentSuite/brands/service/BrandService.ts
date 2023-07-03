@@ -34,10 +34,7 @@ export class BrandService extends BaseService {
     async updateBrand(user: User, brandId: string, input: UpdateBrandInput) {
         this.validateUserAdmin(user, this.createBrand.name);
 
-        const brand = await this.brandRepository.getById(brandId);
-        if (!brand) {
-            throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND, this.logger, this.updateBrand.name);
-        }
+        const brand = user.getBrand(brandId);
         brand.update(input);
         const updatedBrand = await this.brandRepository.save(brand);
 
