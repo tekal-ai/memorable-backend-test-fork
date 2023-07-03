@@ -1,0 +1,11 @@
+# example in https://github.com/anvilco/spectaql/blob/main/config-example.yml
+
+introspection:
+    schemaFile: ./schema.gql
+
+info:
+    description: Creative Intelligence Suite API
+    version: 1.0.0
+    title: Memorable
+
+    x-swaggerUrl: https://.../graphql

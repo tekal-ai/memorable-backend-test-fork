@@ -1,0 +1,22 @@
+# Ignore everything in this directory
+*
+node_modules/
+.idea/
+.husky/
+.serverless/
+dist/
+
+# Except
+!/.gitignore
+!/package.json
+!/tsconfig.json
+!/package-lock.json
+
+!.ebignore
+!.elasticbeanstalk
+!.ebextensions
+
+!/prisma
+!/src
+!/Dockerfile
+

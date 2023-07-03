@@ -1,0 +1,18 @@
+{
+    "_id": "7a21206d-6833-492d-bf04-8be56301ec57",
+    "name": "Local Dev",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-07-03T09:39:57.955Z",
+    "modified": "2023-07-03T09:39:57.955Z",
+    "data": [
+        {
+            "name": "token",
+            "value": ""
+        },
+        {
+            "name": "baseUrl",
+            "value": "http://localhost:3333/graphql"
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["./tsconfig.json"]
+    },
+    "plugins": ["@typescript-eslint", "prettier"],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
+        "eol-last": [2, "always"],
+        "prettier/prettier": ["error"],
+        "@typescript-eslint/switch-exhaustiveness-check": "error",
+        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/no-confusing-non-null-assertion": "error",
+        "@typescript-eslint/no-extra-non-null-assertion": "error",
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/promise-function-async": ["error", {"checkArrowFunctions": false}]
+    },
+    "ignorePatterns": ["src/database/migrations/**", "src/database/intelligentSuiteMigrations/**"],
+    "overrides": [
+        {
+            "files": ["{tests,testsMongo}/**/*.ts"],
+            "rules": {
+                "@typescript-eslint/no-non-null-assertion": ["off"]
+            }
+        }
+    ]
+}

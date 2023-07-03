@@ -1,0 +1,151 @@
+{
+    "_id": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+    "colName": "memorable-test",
+    "created": "2023-07-03T09:31:31.740Z",
+    "sortNum": 10000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "c253f19b-c73a-4a6d-8ce0-bc2b058edd51",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "basic Login",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-07-03T09:31:53.814Z",
+            "modified": "2023-07-03T09:37:51.923Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation ($authInput:AuthenticationInput!) {\n    logIn(input:$authInput) {\n        sessionToken\n    }\n}",
+                    "variables": "{\n  \"authInput\": {\n    \"email\":\"localuser@memorable.io\",\n    \"password\":\"LocalUser!!!98\"\n    \n  }\n}"
+                }
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.data.logIn.sessionToken",
+                    "action": "setto",
+                    "value": "{{token}}"
+                }
+            ]
+        },
+        {
+            "_id": "dad59559-2645-4bbc-a1d5-cafb766b5793",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update User Data",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-07-03T09:33:07.344Z",
+            "modified": "2023-07-03T09:40:52.278Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation ($userProfileInput:UserProfileInput!) {\n    updateUserProfile(input:$userProfileInput) {\n        name,\n        email\n    }\n}",
+                    "variables": "{\n  \"userProfileInput\": {\n    \"name\":\"localUser\",\n    \"currentPassword\":\"LocalUser!!!98\",\n    \"newPassword\":\"LocalUser!!!98\"\n    \n  }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "f8b109b5-b0cf-4dc1-856a-2257604e1c67",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "getLoggedInUser",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-07-03T09:33:34.680Z",
+            "modified": "2023-07-03T09:41:10.206Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n    getLoggedInUser{\n        id,\n        name,\n        email,\n        isAdmin,\n        businessAccount {\n            id,\n            businessName,\n            businessLogoUrl,\n            businessPhone,\n            website,\n            address,\n            brands {\n                id,\n                name,\n                logoUrl,\n                sector,\n                status,\n                adAccounts,\n                socialAccounts,\n            }\n        }\n    }\n}",
+                    "variables": "{}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "5f33a407-9cd4-4f3d-8c16-2cfdd61a2b77",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "create Brand",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-07-03T09:41:40.278Z",
+            "modified": "2023-07-03T09:44:02.226Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation createBrand($brand: CreateBrandInput!){\n    createBrand(input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global 2\",\n    \"sector\": [\"PharmaceuticalsAndBiotechnology\"],\n    \"logoUrl\":\"logoUrl\"\n  }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "9f4d0c59-dcd6-48d1-9e60-0cd6c4a66155",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update Brand",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-07-03T09:42:36.064Z",
+            "modified": "2023-07-03T09:44:08.438Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
+                }
+            },
+            "tests": []
+        }
+    ]
+}

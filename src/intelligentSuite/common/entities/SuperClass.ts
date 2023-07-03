@@ -1,0 +1,12 @@
+export enum SuperClass {
+    VISUAL_VALUES = "VISUAL_VALUES",
+    SCENE = "SCENE",
+    PEOPLE = "PEOPLE",
+    OVERLAY_TEXT = "OVERLAY_TEXT",
+    METADATA = "METADATA",
+    BRAND_ELEMENTS = "BRAND_ELEMENTS",
+    ELEMENTS = "ELEMENTS",
+    AUDIO = "AUDIO",
+    AD_COPY = "AD_COPY",
+    SPEECH = "SPEECH",
+}
