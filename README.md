@@ -17,7 +17,6 @@ We are currently developing tools based on AI models to evaluate the cognitive i
     - The code must be in a new branch and pointing to dev branch
     - The change must include the new endpoint and the logic to change the status of the brand
     - A modification in the thunder client configuration (using the thunder client extension ui) with the test of the new endpoint
-- diego.medina@memorable.io with the email subject “Tech Test Questions - BackEnd Developer”.
 
 ### Evaluation criteria
 We’d like you to demonstrate your ability to produce high-quality code. We will focus particularly on:
@@ -92,7 +91,7 @@ We’d like you to demonstrate your ability to produce high-quality code. We wil
 ### Populate database
 
 -   The init project folder has the creation schema script and a dump of the dev database.
--   Import the dump `dbDump-dev.sql` to your local database using MySQL Workbench or whatever tool you like
+-   Import the dump to your local database using MySQL Workbench or whatever tool you like
 
 ## Development
 
@@ -118,7 +117,6 @@ We’d like you to demonstrate your ability to produce high-quality code. We wil
 ### Main branches
 
 -   `main` (production environment).
--   `dev` (development environment).
 
-All pull requests should be merged into `dev` branch.
+All pull requests should be merged into `main` branch.
 
