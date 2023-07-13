@@ -69,7 +69,6 @@ type Brand {
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
-  status: BrandStatus
   businessAccount: BusinessAccount!
 }
 
@@ -122,14 +121,6 @@ enum Sector {
   OnlineEducationPlatforms
   VocationalAndTechnicalSchools
   CorporateTrainingAndDevelopment
-}
-
-"""Brand Status"""
-enum BrandStatus {
-  IN_PROGRESS
-  DATA_READY
-  MODEL_TRAINING
-  READY
 }
 
 type Mutation {

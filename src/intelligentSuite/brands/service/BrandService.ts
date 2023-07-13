@@ -1,13 +1,10 @@
 import {Service} from "typedi";
-import {ErrorMsg} from "../../../common/errors/ErrorCode";
-import {NotFoundError} from "../../../common/errors/NotFoundError";
 import {UploadRequestInput} from "../../common/inputs/UploadRequestInput";
 import {BaseService} from "../../common/service/BaseService";
 import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse";
 import {FileHandlerService} from "../../fileHandler/service/FileHandlerService";
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
-import {BrandStatus} from "../entities/BrandStatus";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
 
@@ -52,17 +49,5 @@ export class BrandService extends BaseService {
         );
         this.logger.debug(this.getLogoUploadData.name, `Got logo upload data successfully`);
         return result;
-    }
-
-    async updateBrandStatus(brandId: string, status: BrandStatus) {
-        this.logger.verbose(this.updateBrandStatus.name, `Updating brand status`, {brandId, status});
-        let brand = await this.brandRepository.getById(brandId);
-        if (!brand) {
-            throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND, this.logger, this.updateBrandStatus.name);
-        }
-        brand.status = status;
-        brand = await this.brandRepository.save(brand);
-        this.logger.debug(this.updateBrandStatus.name, `Updated brand status successfully`);
-        return brand;
     }
 }
