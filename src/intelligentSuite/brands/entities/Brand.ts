@@ -37,6 +37,12 @@ export default class Brand extends BaseEntity {
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
 
+    /**
+     * Creates a new instance of Brand.
+     * @param businessAccount - The business account associated with the brand.
+     * @param input - Brand details for creation.
+     * @returns Brand The created brand.
+     */
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();
         brand.setId();
@@ -47,12 +53,20 @@ export default class Brand extends BaseEntity {
         return brand;
     }
 
+    /**
+     * Updates the brand's properties with the provided input.
+     * @param input - Updated brand details.
+     */
     update(input: UpdateBrandInput) {
         this.name = input.name || this.name;
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
     }
 
+    /**
+     * Updates the status of the brand.
+     * @param status - New status for the brand.
+     */
     updateStatus(status: BrandStatus) {
         this.status = status;
     }
