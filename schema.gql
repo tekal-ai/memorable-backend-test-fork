@@ -133,7 +133,7 @@ enum BrandStatus {
 }
 
 type Mutation {
-  """Creates a business Account for the provided business admin"""
+  """Creates a business Account for the provided user admin"""
   createBrand(input: CreateBrandInput!): Brand!
 
   """Updates optional fields of a brand"""
