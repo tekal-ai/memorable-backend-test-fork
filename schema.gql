@@ -69,6 +69,7 @@ type Brand {
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
+  status: BrandStatus
   businessAccount: BusinessAccount!
 }
 
@@ -123,6 +124,14 @@ enum Sector {
   CorporateTrainingAndDevelopment
 }
 
+"""Brand Status"""
+enum BrandStatus {
+  IN_PROGRESS
+  DATA_READY
+  MODEL_TRAINING
+  READY
+}
+
 type Mutation {
   """Creates a business Account for the provided business admin"""
   createBrand(input: CreateBrandInput!): Brand!
@@ -132,6 +141,9 @@ type Mutation {
 
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
+
+  """Updates status of a brand"""
+  updateBrandStatus(input: BrandStatusInput!, brandId: String!): Brand!
 
   """Uploads brand logo"""
   requestLogoUploadData(input: UploadRequestInput!): UploadDataResponse!
@@ -213,6 +225,10 @@ enum SocialAccountType {
   FacebookPage
   InstagramAccount
   TiktokAccount
+}
+
+input BrandStatusInput {
+  status: BrandStatus!
 }
 
 type UploadDataResponse {
