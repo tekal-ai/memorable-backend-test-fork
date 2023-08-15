@@ -19,6 +19,12 @@ export class BrandService extends BaseService {
         super();
     }
 
+    /**
+     * Creates a new brand associated with the user's business account.
+     * @param user - The user creating the brand.
+     * @param input - Brand details for creation.
+     * @returns Brand The created brand.
+     */
     async createBrand(user: User, input: CreateBrandInput) {
         this.logger.verbose(this.createBrand.name, `Creating brand for user`, {user: user.email});
         this.validateUserAdmin(user, this.createBrand.name);
@@ -30,6 +36,13 @@ export class BrandService extends BaseService {
         return brand;
     }
 
+    /**
+     * Updates the optional fields of an existing brand.
+     * @param user - The user updating the brand.
+     * @param brandId - ID of the brand to be updated.
+     * @param input - Updated brand details.
+     * @returns Brand The updated brand.
+     * */
     async updateBrand(user: User, brandId: string, input: UpdateBrandInput) {
         this.validateUserAdmin(user, this.createBrand.name);
 
@@ -41,6 +54,13 @@ export class BrandService extends BaseService {
         return updatedBrand;
     }
 
+    /**
+     * Updates the status of an existing brand.
+     * @param user - The user updating the brand status.
+     * @param brandId - ID of the brand to be updated.
+     * @param input - New status for the brand.
+     * @returns Brand The brand with the updated status.
+     */
     async updateBrandStatus(user: User, brandId: string, input: BrandStatusInput) {
         this.logger.debug(this.updateBrandStatus.name, `Updating brand ${brandId} with status ${input}`);
         this.validateUserAdmin(user, this.updateBrandStatus.name);
@@ -65,6 +85,12 @@ export class BrandService extends BaseService {
             });
     }
 
+    /**
+     * Retrieves upload data necessary for brand logo upload.
+     * @param user - The user requesting logo upload data.
+     * @param uploadRequest - Logo information.
+     * @returns UploadDataResponse Upload data necessary for logo upload.
+     */
     async getLogoUploadData(user: User, uploadRequest: UploadRequestInput): Promise<UploadDataResponse> {
         this.logger.verbose(this.getLogoUploadData.name, `Getting logo upload data for user`, {user: user.email});
         const businessAccountId = user.getBusinessAccount().id;
