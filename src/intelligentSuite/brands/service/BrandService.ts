@@ -1,11 +1,13 @@
 import {Service} from "typedi";
+import {ErrorMsg} from "../../../common/errors/ErrorCode";
+import {NotFoundError} from "../../../common/errors/NotFoundError";
 import {UploadRequestInput} from "../../common/inputs/UploadRequestInput";
 import {BaseService} from "../../common/service/BaseService";
 import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse";
 import {FileHandlerService} from "../../fileHandler/service/FileHandlerService";
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
-import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandStatusInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
 
 @Service()
@@ -37,6 +39,30 @@ export class BrandService extends BaseService {
 
         this.logger.debug(this.updateBrand.name, `Updated brand successfully`);
         return updatedBrand;
+    }
+
+    async updateBrandStatus(user: User, brandId: string, input: BrandStatusInput) {
+        this.logger.debug(this.updateBrandStatus.name, `Updating brand ${brandId} with status ${input}`);
+        this.validateUserAdmin(user, this.updateBrandStatus.name);
+
+        return this.brandRepository
+            .getById(brandId)
+            .then(async (brand) => {
+                if (!brand) {
+                    throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND + `. Brand id: ${brandId}`);
+                }
+
+                brand.updateStatus(input.status);
+                return await this.brandRepository.save(brand);
+            })
+            .catch((error) => {
+                this.logger.error(
+                    this.updateBrandStatus.name,
+                    ErrorMsg.INTERNAL_SERVER_ERROR + `. Error description: ${error.message}`,
+                    error,
+                );
+                throw error;
+            });
     }
 
     async getLogoUploadData(user: User, uploadRequest: UploadRequestInput): Promise<UploadDataResponse> {
