@@ -4,6 +4,7 @@ import {BaseEntity} from "../../../common/entities/BaseEntity";
 import {BusinessAccount} from "../../businessAccounts/entities/BusinessAccount";
 import {Sector} from "../../common/entities/Sector";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandStatus} from "./BrandStatus";
 
 @ObjectType()
 @Entity()
@@ -28,6 +29,10 @@ export default class Brand extends BaseEntity {
     @Column({type: "simple-array", nullable: true})
     socialAccounts?: string[];
 
+    @Field(() => BrandStatus, {defaultValue: BrandStatus.IN_PROGRESS})
+    @Column({type: "enum", enum: BrandStatus, default: BrandStatus.IN_PROGRESS})
+    status!: BrandStatus;
+
     @ManyToOne(() => BusinessAccount)
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
@@ -46,6 +51,10 @@ export default class Brand extends BaseEntity {
         this.name = input.name || this.name;
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
+    }
+
+    updateStatus(status: BrandStatus) {
+        this.status = status;
     }
 }
 
