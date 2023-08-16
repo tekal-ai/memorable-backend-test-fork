@@ -14,7 +14,7 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-07-03T09:31:53.814Z",
-            "modified": "2023-07-03T09:37:51.923Z",
+            "modified": "2023-08-16T08:23:19.419Z",
             "headers": [],
             "params": [],
             "body": {
@@ -32,6 +32,12 @@
                     "custom": "json.data.logIn.sessionToken",
                     "action": "setto",
                     "value": "{{token}}"
+                },
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
                 }
             ]
         },
@@ -100,7 +106,7 @@
             "method": "POST",
             "sortNum": 50000,
             "created": "2023-07-03T09:41:40.278Z",
-            "modified": "2023-07-03T09:44:02.226Z",
+            "modified": "2023-08-16T08:25:20.408Z",
             "headers": [
                 {
                     "name": "authorization",
@@ -113,11 +119,34 @@
                 "raw": "",
                 "form": [],
                 "graphql": {
-                    "query": "mutation createBrand($brand: CreateBrandInput!){\n    createBrand(input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
-                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global 2\",\n    \"sector\": [\"PharmaceuticalsAndBiotechnology\"],\n    \"logoUrl\":\"logoUrl\"\n  }\n}"
+                    "query": "mutation createBrand($brand: CreateBrandInput!){\n    createBrand(input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global 4\",\n    \"sector\": [\"PharmaceuticalsAndBiotechnology\"],\n    \"logoUrl\":\"logoUrl\"\n  }\n}"
                 }
             },
-            "tests": []
+            "tests": [
+                {
+                    "type": "json-query",
+                    "custom": "json.data.createBrand.status",
+                    "action": "equal",
+                    "value": "IN_PROGRESS"
+                },
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "c253f19b-c73a-4a6d-8ce0-bc2b058edd51",
+                        "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
         },
         {
             "_id": "9f4d0c59-dcd6-48d1-9e60-0cd6c4a66155",
@@ -128,7 +157,7 @@
             "method": "POST",
             "sortNum": 60000,
             "created": "2023-07-03T09:42:36.064Z",
-            "modified": "2023-07-03T09:44:08.438Z",
+            "modified": "2023-08-16T08:26:18.334Z",
             "headers": [
                 {
                     "name": "authorization",
@@ -141,11 +170,190 @@
                 "raw": "",
                 "form": [],
                 "graphql": {
-                    "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
-                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
+                    "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global Mod\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n  },\n  \"brandId\": \"01H7XZASBPQSCNYM5QT51G7PXJ\"\n}"
                 }
             },
-            "tests": []
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "notcontains",
+                    "value": "json.data.updateBrand.status"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.name",
+                    "action": "equal",
+                    "value": "Pharma Global Mod"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.sector",
+                    "action": "count",
+                    "value": "1"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.logoUrl",
+                    "action": "equal",
+                    "value": "logoUrl"
+                }
+            ],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "c253f19b-c73a-4a6d-8ce0-bc2b058edd51",
+                        "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "3dd19b83-5395-4df2-930e-90436c04f2b4",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update Brand Status",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 63750,
+            "created": "2023-08-16T04:38:34.502Z",
+            "modified": "2023-08-16T08:26:24.128Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
+                    "variables": "{\n  \"brand\": {\n    \"status\": \"DATA_READY\"\n  },\n  \"brandId\": \"01H7XZASBPQSCNYM5QT51G7PXJ\"\n}"
+                }
+            },
+            "tests": [
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.status",
+                    "action": "equal",
+                    "value": "DATA_READY"
+                },
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.name",
+                    "action": "equal",
+                    "value": "Pharma Global Mod"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.sector",
+                    "action": "count",
+                    "value": "1"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.logoUrl",
+                    "action": "equal",
+                    "value": "logoUrl"
+                }
+            ],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "c253f19b-c73a-4a6d-8ce0-bc2b058edd51",
+                        "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "71f2d32c-11b3-4f2a-a2fc-a183a28952cd",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update Brand Mixed",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 67500,
+            "created": "2023-08-16T08:12:10.171Z",
+            "modified": "2023-08-16T08:19:54.641Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global Mod\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"],\n    \"status\": \"READY\"\n  },\n  \"brandId\": \"01H7XZASBPQSCNYM5QT51G7PXJ\"\n}"
+                }
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.status",
+                    "action": "equal",
+                    "value": "READY"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.name",
+                    "action": "equal",
+                    "value": "Pharma Global Mod"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.sector",
+                    "action": "count",
+                    "value": "1"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.logoUrl",
+                    "action": "equal",
+                    "value": "logoUrl"
+                }
+            ],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "c253f19b-c73a-4a6d-8ce0-bc2b058edd51",
+                        "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
         }
     ]
 }

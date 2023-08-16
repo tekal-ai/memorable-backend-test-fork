@@ -142,9 +142,6 @@ type Mutation {
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
 
-  """Updates status of a brand"""
-  updateBrandStatus(input: BrandStatusInput!, brandId: String!): Brand!
-
   """Uploads brand logo"""
   requestLogoUploadData(input: UploadRequestInput!): UploadDataResponse!
 
@@ -211,7 +208,7 @@ input UpdateBrandInput {
   """
   Status of the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY
   """
-  status: BrandStatus!
+  status: BrandStatus
 }
 
 input BrandAssetsInput {
@@ -249,13 +246,6 @@ enum SocialAccountType {
   FacebookPage
   InstagramAccount
   TiktokAccount
-}
-
-input BrandStatusInput {
-  """
-  Status of the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY
-  """
-  status: BrandStatus!
 }
 
 type UploadDataResponse {
