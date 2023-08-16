@@ -64,14 +64,6 @@ export default class Brand extends BaseEntity {
         this.logoUrl = input.logoUrl || this.logoUrl;
         this.status = input.status || this.status;
     }
-
-    /**
-     * Updates the status of the brand.
-     * @param status - New status for the brand.
-     */
-    updateStatus(status: BrandStatus) {
-        this.status = status;
-    }
 }
 
 export type BrandInfo = {
