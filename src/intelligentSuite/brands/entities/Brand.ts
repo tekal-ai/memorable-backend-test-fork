@@ -31,7 +31,7 @@ export default class Brand extends BaseEntity {
 
     @Field(() => BrandStatus, {defaultValue: BrandStatus.IN_PROGRESS})
     @Column({type: "enum", enum: BrandStatus, default: BrandStatus.IN_PROGRESS})
-    status!: BrandStatus;
+    status?: BrandStatus;
 
     @ManyToOne(() => BusinessAccount)
     @Field(() => BusinessAccount)

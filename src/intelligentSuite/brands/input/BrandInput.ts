@@ -25,6 +25,7 @@ export class UpdateBrandInput {
     sector?: Sector[];
 
     @Field(() => BrandStatus, {
+        nullable: true,
         description: "Status of the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY",
     })
     status?: BrandStatus;
