@@ -65,24 +65,14 @@ export class BrandService extends BaseService {
         this.logger.debug(this.updateBrandStatus.name, `Updating brand ${brandId} with status ${input}`);
         this.validateUserAdmin(user, this.updateBrandStatus.name);
 
-        return this.brandRepository
-            .getById(brandId)
-            .then(async (brand) => {
-                if (!brand) {
-                    throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND + `. Brand id: ${brandId}`);
-                }
+        return this.brandRepository.getById(brandId).then(async (brand) => {
+            if (!brand) {
+                throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND + `. Brand id: ${brandId}`);
+            }
 
-                brand.updateStatus(input.status);
-                return await this.brandRepository.save(brand);
-            })
-            .catch((error) => {
-                this.logger.error(
-                    this.updateBrandStatus.name,
-                    ErrorMsg.INTERNAL_SERVER_ERROR + `. Error description: ${error.message}`,
-                    error,
-                );
-                throw error;
-            });
+            brand.updateStatus(input.status);
+            return await this.brandRepository.save(brand);
+        });
     }
 
     /**
