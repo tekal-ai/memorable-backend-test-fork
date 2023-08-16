@@ -64,11 +64,11 @@ export class BrandService extends BaseService {
     async updateBrandStatus(user: User, brandId: string, input: BrandStatusInput) {
         this.logger.debug(this.updateBrandStatus.name, `Updating brand ${brandId} with status ${input}`);
         this.validateUserAdmin(user, this.updateBrandStatus.name);
-
         return this.brandRepository.getById(brandId).then(async (brand) => {
             if (!brand) {
                 throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND + `. Brand id: ${brandId}`);
             }
+            this.validateUserAccessToBrand(user, brand, this.updateBrandStatus.name);
 
             brand.updateStatus(input.status);
             const updatedBrand = await this.brandRepository.save(brand);

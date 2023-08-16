@@ -51,7 +51,9 @@ class BrandServiceTest {
     async shouldUpdateBrandStatus_success() {
         when(this.brandRepositoryMock.getById(anyString())).thenResolve(this.brandMock);
 
-        await this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {status: BrandStatus.DATA_READY});
+        await this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {
+            status: BrandStatus.DATA_READY,
+        });
 
         verify(this.brandRepositoryMock.save(anyOfClass(Brand))).times(1);
         this.brandMock.status.should.equal(BrandStatus.DATA_READY);
@@ -73,7 +75,6 @@ class BrandServiceTest {
         const brandId = "nonExistentBrandId";
 
         when(this.brandRepositoryMock.getById(brandId)).thenResolve(undefined);
-
 
         const resultPromise = this.brandServiceMock.updateBrandStatus(this.adminUser, brandId, {
             status: BrandStatus.DATA_READY,
@@ -106,6 +107,46 @@ class BrandServiceTest {
             .catch((error) => {
                 error.should.be.instanceOf(ForbiddenError);
                 error.message.should.contain("NOT_ENOUGH_PERMISSIONS");
+            });
+    }
+
+    @test
+    async shouldThrowError_whenUserHasNoBusinessAccount() {
+        delete this.adminUser.businessAccount;
+
+        when(this.brandRepositoryMock.getById(anyString())).thenResolve(this.brandMock);
+
+        const resultPromise = this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {
+            status: BrandStatus.DATA_READY,
+        });
+
+        return resultPromise
+            .then(() => {
+                throw new Error("Expected error to be thrown, but no error was thrown.");
+            })
+            .catch((error) => {
+                error.message.should.contain("USER_NOT_HAVE_BUSINESS_ACCOUNT");
+            });
+    }
+
+    @test
+    async shouldThrowError_whenUserHasNoAccessToTheBusinessAccount() {
+        const businessInfo: CreateBusinessAccountInput = new CreateBusinessAccountInput();
+        businessInfo.businessName = "other test business";
+        const business: BusinessAccount = BusinessAccount.create(businessInfo);
+        this.adminUser.businessAccount = business;
+        when(this.brandRepositoryMock.getById(anyString())).thenResolve(this.brandMock);
+
+        const resultPromise = this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {
+            status: BrandStatus.DATA_READY,
+        });
+
+        return resultPromise
+            .then(() => {
+                throw new Error("Expected error to be thrown, but no error was thrown.");
+            })
+            .catch((error) => {
+                error.message.should.contain("USER_NOT_HAVE_ACCESS_TO_BRAND");
             });
     }
 }
