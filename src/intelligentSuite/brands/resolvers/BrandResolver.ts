@@ -6,7 +6,7 @@ import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse"
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
 import {BrandAssetsResponse} from "../entities/BrandAssetsResponse";
-import {BrandAssetsInput, BrandStatusInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandAssetsInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandAccountsService} from "../service/BrandAccountsService";
 import {BrandService} from "../service/BrandService";
 
@@ -61,22 +61,6 @@ export class BrandResolver {
         @Arg("input") input: BrandAssetsInput,
     ) {
         return await this.brandAccountsService.updateBrandAssets(user, brandId, input);
-    }
-
-    /**
-     * Updates the status of a brand.
-     * @param user - The authenticated user (admin).
-     * @param brandId - The ID of the brand to update the status for.
-     * @param input - New status for the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY
-     * @returns Brand The brand with updated status.
-     */
-    @Mutation((_returns) => Brand, {description: "Updates status of a brand"})
-    async updateBrandStatus(
-        @CurrentUser() user: User,
-        @Arg("brandId") brandId: string,
-        @Arg("input") input: BrandStatusInput,
-    ) {
-        return await this.brandService.updateBrandStatus(user, brandId, input);
     }
 
     /**

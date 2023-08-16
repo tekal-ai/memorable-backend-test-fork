@@ -23,6 +23,11 @@ export class UpdateBrandInput {
 
     @Field(() => [Sector], {nullable: true, description: "List of sectors related to the brand"})
     sector?: Sector[];
+
+    @Field(() => BrandStatus, {
+        description: "Status of the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY",
+    })
+    status?: BrandStatus;
 }
 
 @InputType()
@@ -73,10 +78,3 @@ export class BrandLogoVariantInput {
     logoVariant!: string;
 }
 
-@InputType()
-export class BrandStatusInput {
-    @Field(() => BrandStatus, {
-        description: "Status of the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY",
-    })
-    status!: BrandStatus;
-}

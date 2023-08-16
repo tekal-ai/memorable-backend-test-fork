@@ -25,25 +25,27 @@ class BrandServiceTest {
 
     private adminUser: User;
     private brandMock: Brand;
+    private businessMock: BusinessAccount;
 
     before() {
         this.brandServiceMock = new BrandService(instance(this.brandRepositoryMock), this.fileHandlerService);
 
         const businessInfo: CreateBusinessAccountInput = new CreateBusinessAccountInput();
         businessInfo.businessName = "test business";
-        const business: BusinessAccount = BusinessAccount.create(businessInfo);
+        this.businessMock = BusinessAccount.create(businessInfo);
 
         this.adminUser = User.createUser({
             name: "test",
             email: "test@test.com",
             isAdmin: true,
-            businessAccount: business,
+            businessAccount: this.businessMock,
         });
 
         const brandInput: CreateBrandInput = new CreateBrandInput();
         brandInput.name = "test brand";
         brandInput.sector = [Sector.HealthcareServices];
-        this.brandMock = Brand.create(business, brandInput);
+        this.brandMock = Brand.create(this.businessMock, brandInput);
+        this.businessMock.brands = [this.brandMock];
         this.brandMock.status = BrandStatus.IN_PROGRESS;
     }
 
@@ -51,7 +53,7 @@ class BrandServiceTest {
     async shouldUpdateBrandStatus_success() {
         when(this.brandRepositoryMock.getById(anyString())).thenResolve(this.brandMock);
 
-        await this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {
+        await this.brandServiceMock.updateBrand(this.adminUser, this.brandMock.id, {
             status: BrandStatus.DATA_READY,
         });
 
@@ -76,7 +78,7 @@ class BrandServiceTest {
 
         when(this.brandRepositoryMock.getById(brandId)).thenResolve(undefined);
 
-        const resultPromise = this.brandServiceMock.updateBrandStatus(this.adminUser, brandId, {
+        const resultPromise = this.brandServiceMock.updateBrand(this.adminUser, brandId, {
             status: BrandStatus.DATA_READY,
         });
 
@@ -86,8 +88,7 @@ class BrandServiceTest {
             })
             .catch((error) => {
                 error.should.be.instanceOf(NotFoundError);
-                error.message.should.contain("BRAND_NOT_FOUND");
-                error.message.should.contain(brandId);
+                error.message.should.contain("USER_NOT_HAVE_ACCESS_TO_BRAND");
             });
     }
 
@@ -96,7 +97,7 @@ class BrandServiceTest {
         const notAdminUser = this.adminUser;
         notAdminUser.isAdmin = false;
 
-        const resultPromise = this.brandServiceMock.updateBrandStatus(notAdminUser, this.brandMock.id, {
+        const resultPromise = this.brandServiceMock.updateBrand(notAdminUser, this.brandMock.id, {
             status: BrandStatus.DATA_READY,
         });
 
@@ -116,7 +117,7 @@ class BrandServiceTest {
 
         when(this.brandRepositoryMock.getById(anyString())).thenResolve(this.brandMock);
 
-        const resultPromise = this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {
+        const resultPromise = this.brandServiceMock.updateBrand(this.adminUser, this.brandMock.id, {
             status: BrandStatus.DATA_READY,
         });
 
@@ -130,14 +131,15 @@ class BrandServiceTest {
     }
 
     @test
-    async shouldThrowError_whenUserHasNoAccessToTheBusinessAccount() {
+    async shouldThrowError_whenUserHasNoAccessToTheBrand() {
         const businessInfo: CreateBusinessAccountInput = new CreateBusinessAccountInput();
         businessInfo.businessName = "other test business";
         const business: BusinessAccount = BusinessAccount.create(businessInfo);
+        business.brands = [];
         this.adminUser.businessAccount = business;
         when(this.brandRepositoryMock.getById(anyString())).thenResolve(this.brandMock);
 
-        const resultPromise = this.brandServiceMock.updateBrandStatus(this.adminUser, this.brandMock.id, {
+        const resultPromise = this.brandServiceMock.updateBrand(this.adminUser, this.brandMock.id, {
             status: BrandStatus.DATA_READY,
         });
 

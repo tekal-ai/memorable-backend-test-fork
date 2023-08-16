@@ -62,6 +62,7 @@ export default class Brand extends BaseEntity {
         this.name = input.name || this.name;
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
+        this.status = input.status || this.status;
     }
 
     /**

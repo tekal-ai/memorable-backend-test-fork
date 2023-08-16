@@ -1,13 +1,11 @@
 import {Service} from "typedi";
-import {ErrorMsg} from "../../../common/errors/ErrorCode";
-import {NotFoundError} from "../../../common/errors/NotFoundError";
 import {UploadRequestInput} from "../../common/inputs/UploadRequestInput";
 import {BaseService} from "../../common/service/BaseService";
 import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse";
 import {FileHandlerService} from "../../fileHandler/service/FileHandlerService";
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
-import {BrandStatusInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
 
 @Service()
@@ -37,44 +35,23 @@ export class BrandService extends BaseService {
     }
 
     /**
-     * Updates the optional fields of an existing brand.
+     * Updates the optional fields of an existing brand only if user is Admin and has access to the brand.
      * @param user - The user updating the brand.
      * @param brandId - ID of the brand to be updated.
      * @param input - Updated brand details.
      * @returns Brand The updated brand.
      * */
     async updateBrand(user: User, brandId: string, input: UpdateBrandInput) {
+        this.logger.debug(this.updateBrand.name, `User ${user.email} is updating brand ${brandId}`);
         this.validateUserAdmin(user, this.createBrand.name);
 
+        // Retrieve brand while validating user access to the specified brandId
         const brand = user.getBrand(brandId);
         brand.update(input);
         const updatedBrand = await this.brandRepository.save(brand);
 
-        this.logger.debug(this.updateBrand.name, `Updated brand successfully`);
+        this.logger.debug(this.updateBrand.name, `Updated brand ${brandId} successfully`);
         return updatedBrand;
-    }
-
-    /**
-     * Updates the status of an existing brand.
-     * @param user - The user updating the brand status.
-     * @param brandId - ID of the brand to be updated.
-     * @param input - New status for the brand.
-     * @returns Brand The brand with the updated status.
-     */
-    async updateBrandStatus(user: User, brandId: string, input: BrandStatusInput) {
-        this.logger.debug(this.updateBrandStatus.name, `Updating brand ${brandId} with status ${input}`);
-        this.validateUserAdmin(user, this.updateBrandStatus.name);
-        return this.brandRepository.getById(brandId).then(async (brand) => {
-            if (!brand) {
-                throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND + `. Brand id: ${brandId}`);
-            }
-            this.validateUserAccessToBrand(user, brand, this.updateBrandStatus.name);
-
-            brand.updateStatus(input.status);
-            const updatedBrand = await this.brandRepository.save(brand);
-            this.logger.debug(this.updateBrandStatus.name, `Successfully updated brand ${brandId} to status ${input}`);
-            return updatedBrand;
-        });
     }
 
     /**
