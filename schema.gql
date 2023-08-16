@@ -69,6 +69,7 @@ type Brand {
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
+  status: BrandStatus
   businessAccount: BusinessAccount!
 }
 
@@ -123,8 +124,16 @@ enum Sector {
   CorporateTrainingAndDevelopment
 }
 
+"""Brand Status"""
+enum BrandStatus {
+  IN_PROGRESS
+  DATA_READY
+  MODEL_TRAINING
+  READY
+}
+
 type Mutation {
-  """Creates a business Account for the provided business admin"""
+  """Creates a business Account for the provided user admin"""
   createBrand(input: CreateBrandInput!): Brand!
 
   """Updates optional fields of a brand"""
@@ -176,24 +185,45 @@ type Mutation {
 }
 
 input CreateBrandInput {
+  """Name of brand"""
   name: String!
+
+  """Logo URL of brand"""
   logoUrl: String
+
+  """List of sectors related to the brand"""
   sector: [Sector!]!
 }
 
 input UpdateBrandInput {
+  """Name of brand"""
   name: String
+
+  """Logo URL of brand"""
   logoUrl: String
+
+  """List of sectors related to the brand"""
   sector: [Sector!]
+
+  """
+  Status of the brand. Possible values: IN_PROGRESS, DATA_READY, MODEL_TRAINING, READY
+  """
+  status: BrandStatus
 }
 
 input BrandAssetsInput {
+  """List of Ad Accounts associated with the brand"""
   adAccount: [AdAccountInput!]
+
+  """List of Social Accounts associated with the brand"""
   socialAccount: [SocialAccountInput!]
 }
 
 input AdAccountInput {
+  """Ad Account ID"""
   id: Int!
+
+  """Ad Account Type"""
   type: AdAccountType!
 }
 
@@ -204,7 +234,10 @@ enum AdAccountType {
 }
 
 input SocialAccountInput {
+  """Social Account ID"""
   id: Int!
+
+  """Social Account Type"""
   type: SocialAccountType!
 }
 

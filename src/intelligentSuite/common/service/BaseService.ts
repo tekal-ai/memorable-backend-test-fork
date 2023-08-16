@@ -5,6 +5,7 @@ import {User} from "../../users/entities/User";
 
 export abstract class BaseService {
     protected logger: Logger;
+
     constructor() {
         this.logger = new Logger(this.constructor.name);
     }
@@ -18,4 +19,5 @@ export abstract class BaseService {
             );
         }
     }
+
 }
