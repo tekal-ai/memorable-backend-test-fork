@@ -50,6 +50,7 @@ export default class Brand extends BaseEntity {
         brand.sector = input.sector;
         brand.logoUrl = input.logoUrl || brand.logoUrl;
         brand.businessAccount = businessAccount;
+        brand.status = BrandStatus.IN_PROGRESS;
         return brand;
     }
 

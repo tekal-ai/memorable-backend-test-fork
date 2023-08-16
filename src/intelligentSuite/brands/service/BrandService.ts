@@ -71,7 +71,9 @@ export class BrandService extends BaseService {
             }
 
             brand.updateStatus(input.status);
-            return await this.brandRepository.save(brand);
+            const updatedBrand = await this.brandRepository.save(brand);
+            this.logger.debug(this.updateBrandStatus.name, `Successfully updated brand ${brandId} to status ${input}`);
+            return updatedBrand;
         });
     }
 
