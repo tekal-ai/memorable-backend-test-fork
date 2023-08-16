@@ -157,7 +157,7 @@
             "method": "POST",
             "sortNum": 60000,
             "created": "2023-07-03T09:42:36.064Z",
-            "modified": "2023-08-16T08:26:18.334Z",
+            "modified": "2023-08-16T08:42:05.654Z",
             "headers": [
                 {
                     "name": "authorization",
@@ -171,7 +171,7 @@
                 "form": [],
                 "graphql": {
                     "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
-                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global Mod\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n  },\n  \"brandId\": \"01H7XZASBPQSCNYM5QT51G7PXJ\"\n}"
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global Mod\",\n    \"logoUrl\":\"logoUrlMod\",\n    \"sector\": [\"Utilities\"]\n  },\n  \"brandId\": \"01H4618V8XGS613BS5BSPZP180\"\n}"
                 }
             },
             "tests": [
@@ -182,10 +182,10 @@
                     "value": "200"
                 },
                 {
-                    "type": "res-body",
-                    "custom": "",
-                    "action": "notcontains",
-                    "value": "json.data.updateBrand.status"
+                    "type": "json-query",
+                    "custom": "json.data.updateBrand.status",
+                    "action": "equal",
+                    "value": "IN_PROGRESS"
                 },
                 {
                     "type": "json-query",
@@ -203,7 +203,7 @@
                     "type": "json-query",
                     "custom": "json.data.updateBrand.logoUrl",
                     "action": "equal",
-                    "value": "logoUrl"
+                    "value": "logoUrlMod"
                 }
             ],
             "preReq": {
@@ -226,7 +226,7 @@
             "method": "POST",
             "sortNum": 63750,
             "created": "2023-08-16T04:38:34.502Z",
-            "modified": "2023-08-16T08:26:24.128Z",
+            "modified": "2023-08-16T08:42:43.681Z",
             "headers": [
                 {
                     "name": "authorization",
@@ -240,7 +240,7 @@
                 "form": [],
                 "graphql": {
                     "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
-                    "variables": "{\n  \"brand\": {\n    \"status\": \"DATA_READY\"\n  },\n  \"brandId\": \"01H7XZASBPQSCNYM5QT51G7PXJ\"\n}"
+                    "variables": "{\n  \"brand\": {\n    \"status\": \"DATA_READY\"\n  },\n  \"brandId\": \"01H4618V8XGS613BS5BSPZP180\"\n}"
                 }
             },
             "tests": [
@@ -272,7 +272,7 @@
                     "type": "json-query",
                     "custom": "json.data.updateBrand.logoUrl",
                     "action": "equal",
-                    "value": "logoUrl"
+                    "value": "logoUrlMod"
                 }
             ],
             "preReq": {
@@ -295,7 +295,7 @@
             "method": "POST",
             "sortNum": 67500,
             "created": "2023-08-16T08:12:10.171Z",
-            "modified": "2023-08-16T08:19:54.641Z",
+            "modified": "2023-08-16T08:44:05.267Z",
             "headers": [
                 {
                     "name": "authorization",
@@ -309,7 +309,7 @@
                 "form": [],
                 "graphql": {
                     "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n        status\n    }\n}",
-                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global Mod\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"],\n    \"status\": \"READY\"\n  },\n  \"brandId\": \"01H7XZASBPQSCNYM5QT51G7PXJ\"\n}"
+                    "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global Mixed Mod\",\n    \"logoUrl\":\"logoUrlMixedMod\",\n    \"sector\": [\"Utilities\", \"HardwareAndElectronics\"],\n    \"status\": \"READY\"\n  },\n  \"brandId\": \"01H4618V8XGS613BS5BSPZP180\"\n}"
                 }
             },
             "tests": [
@@ -329,19 +329,19 @@
                     "type": "json-query",
                     "custom": "json.data.updateBrand.name",
                     "action": "equal",
-                    "value": "Pharma Global Mod"
+                    "value": "Pharma Global Mixed Mod"
                 },
                 {
                     "type": "json-query",
                     "custom": "json.data.updateBrand.sector",
                     "action": "count",
-                    "value": "1"
+                    "value": "2"
                 },
                 {
                     "type": "json-query",
                     "custom": "json.data.updateBrand.logoUrl",
                     "action": "equal",
-                    "value": "logoUrl"
+                    "value": "logoUrlMixedMod"
                 }
             ],
             "preReq": {
