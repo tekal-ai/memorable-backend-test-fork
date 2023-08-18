@@ -1,6 +1,7 @@
 import {Field, InputType, Int} from "type-graphql";
 import {AdAccountType, SocialAccountType} from "../../common/entities/Assets";
 import {Sector} from "../../common/entities/Sector";
+import { BrandStatus } from "../entities/BrandStatus";
 
 @InputType()
 export class CreateBrandInput {

@@ -5,6 +5,7 @@ import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse"
 import {FileHandlerService} from "../../fileHandler/service/FileHandlerService";
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
+import { BrandStatus } from "../entities/BrandStatus";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
 
@@ -39,6 +40,17 @@ export class BrandService extends BaseService {
         return updatedBrand;
     }
 
+    async updateBrandStatus(user: User, brandId: string, status: BrandStatus){
+        const brand = user.getBrand(brandId)
+
+        this.validateUserAdmin(user, brand.name)
+        brand.updateStatus(status)
+        const updatedBrand = await this.brandRepository.save(brand)
+
+        this.logger.debug(brand.name, `Succesfully updated brand ${brand.name} to status: ${status}`)
+        return updatedBrand
+    }
+    
     async getLogoUploadData(user: User, uploadRequest: UploadRequestInput): Promise<UploadDataResponse> {
         this.logger.verbose(this.getLogoUploadData.name, `Getting logo upload data for user`, {user: user.email});
         const businessAccountId = user.getBusinessAccount().id;
