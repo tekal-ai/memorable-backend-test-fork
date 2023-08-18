@@ -31,6 +31,7 @@ CREATE TABLE `brand` (
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   `name` varchar(255) NOT NULL,
+  `status`: text,
   `logoUrl` varchar(255) DEFAULT NULL,
   `businessAccountId` varchar(255) DEFAULT NULL,
   `sector` text,
