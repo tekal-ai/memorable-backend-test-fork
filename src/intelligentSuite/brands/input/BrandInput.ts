@@ -1,6 +1,7 @@
 import {Field, InputType, Int} from "type-graphql";
 import {AdAccountType, SocialAccountType} from "../../common/entities/Assets";
 import {Sector} from "../../common/entities/Sector";
+import { BrandStatus } from "../entities/BrandStatus";
 
 @InputType()
 export class CreateBrandInput {
@@ -10,6 +11,11 @@ export class CreateBrandInput {
     logoUrl?: string;
     @Field(() => [Sector])
     sector!: Sector[];
+}
+@InputType()
+export class BrandStatusInput {
+    @Field(() => [BrandStatus])
+    status!: BrandStatus;
 }
 
 @InputType()
@@ -22,6 +28,12 @@ export class UpdateBrandInput {
 
     @Field(() => [Sector], {nullable: true})
     sector?: Sector[];
+}
+
+@InputType()
+export class UpdateBrandStatusInput {
+    @Field(() => [BrandStatus], {nullable: true})
+    status?: BrandStatus;
 }
 @InputType()
 export class BrandAssetsInput {

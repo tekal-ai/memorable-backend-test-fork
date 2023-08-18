@@ -66,10 +66,19 @@ type Brand {
   updatedAt: DateTime!
   name: String!
   logoUrl: String
+  status: [BrandStatus!]
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
   businessAccount: BusinessAccount!
+}
+
+"""Brand Status"""
+enum BrandStatus {
+  IN_PROGRESS
+  DATA_READY
+  MODEL_TRAINING
+  READY
 }
 
 enum Sector {
@@ -127,6 +136,9 @@ type Mutation {
   """Creates a business Account for the provided business admin"""
   createBrand(input: CreateBrandInput!): Brand!
 
+  """Change Brand Status"""
+  updateBrandStatus(input: UpdateBrandStatusInput!, brandId: String!): Brand!
+
   """Updates optional fields of a brand"""
   updateBrand(input: UpdateBrandInput!, brandId: String!): Brand!
 
@@ -179,6 +191,10 @@ input CreateBrandInput {
   name: String!
   logoUrl: String
   sector: [Sector!]!
+}
+
+input UpdateBrandStatusInput {
+  status: [BrandStatus!]
 }
 
 input UpdateBrandInput {

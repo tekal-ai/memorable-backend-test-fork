@@ -6,7 +6,7 @@ import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse"
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
 import {BrandAssetsResponse} from "../entities/BrandAssetsResponse";
-import {BrandAssetsInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandAssetsInput, CreateBrandInput, UpdateBrandInput, UpdateBrandStatusInput} from "../input/BrandInput";
 import {BrandAccountsService} from "../service/BrandAccountsService";
 import {BrandService} from "../service/BrandService";
 
@@ -23,6 +23,13 @@ export class BrandResolver {
     })
     async createBrand(@CurrentUser() user: User, @Arg("input") input: CreateBrandInput) {
         return await this.brandService.createBrand(user, input);
+    }
+
+    @Mutation((_returns) => Brand, {
+        description: "Change Brand Status",
+    })
+    async updateBrandStatus(@CurrentUser() user: User,@Arg("brandId") brandId: string, @Arg("input") input: UpdateBrandStatusInput) {
+        return await this.brandService.updateBrandStatus(user,brandId, input);
     }
 
     @Mutation((_returns) => Brand, {description: "Updates optional fields of a brand"})
