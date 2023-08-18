@@ -34,7 +34,7 @@ const integrationDbOptions: UrlDbConnection = {
 
 const userDbOptions: UrlDbConnection = {
     options: "socket_timeout=30&connection_limit=20&pool_timeout=20",
-    url: `mysql://root:root@localhost:3307/test_db`,
+    url: `mysql://root:root@localhost:3307/test_schema`,
 };
 
 const awsConfig: AWSConfig = {

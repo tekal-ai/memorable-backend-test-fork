@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "86300e0e-8379-46f8-8e3b-d21632c5055a",
+		"name": "memorable-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9535268"
+	},
+	"item": [
+		{
+			"name": "basic Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($authInput:AuthenticationInput!) {\n    logIn(input:$authInput) {\n        sessionToken\n    }\n}",
+						"variables": "{\n  \"authInput\": {\n    \"email\":\"localnoadmin@memorable.io\",\n    \"password\":\"LocalUser!!!98\"\n    \n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update User Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($userProfileInput:UserProfileInput!) {\n    updateUserProfile(input:$userProfileInput) {\n        name,\n        email\n    }\n}",
+						"variables": "{\n  \"userProfileInput\": {\n    \"name\":\"localUser\",\n    \"currentPassword\":\"LocalUser!!!98\",\n    \"newPassword\":\"LocalUser!!!98\"\n    \n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLoggedInUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOiIxIiwiaXNzdWVkIjoxNjkyMzgxNzY4NDg1LCJleHBpcmVzIjoxNjkyMzkyNTY4NDg1fQ.vQHx-b-7D96SMvmdpquUHFO1ka7xhcXZN3L75w28Dd17MG2SosClJssu06LctS0ZXv3M8a7QtXSMP59dW2jBEw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    getLoggedInUser{\n        id,\n        name,\n        email,\n        isAdmin,\n        businessAccount {\n            id,\n            businessName,\n            businessLogoUrl,\n            businessPhone,\n            website,\n            address,\n            brands {\n                id,\n                name,\n                logoUrl,\n                sector,\n                adAccounts,\n                socialAccounts,\n            }\n        }\n    }\n}",
+						"variables": "{}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Brand",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOiIxIiwiaXNzdWVkIjoxNjkyMzgxNzY4NDg1LCJleHBpcmVzIjoxNjkyMzkyNTY4NDg1fQ.vQHx-b-7D96SMvmdpquUHFO1ka7xhcXZN3L75w28Dd17MG2SosClJssu06LctS0ZXv3M8a7QtXSMP59dW2jBEw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation createBrand($brand: CreateBrandInput!){\n    createBrand(input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
+						"variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global 1\",\n    \"sector\": [\"PharmaceuticalsAndBiotechnology\",\"InvestmentAndWealthManagement\"],\n    \"logoUrl\":\"logoUrl\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Brand",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
+						"variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update brand status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOiIyIiwiaXNzdWVkIjoxNjkyMzg1MDcwNDkzLCJleHBpcmVzIjoxNjkyMzk1ODcwNDkzfQ.E6ena1wUnQTPoeRXEjm46KDOFioCPBYkiq61bnulIj23M2VI0FI4TFmlSe254o_JDxxg9zLHN9NZJF5tCm_tqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation updateBrandStatus($brandId: String!, $brand: UpdateBrandStatusInput!){\n    updateBrandStatus(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
+						"variables": "{\n  \"brand\": {\n    \"status\": \"IN_PROGRESS\"\n  },\n  \"brandId\": \"01H84ZXM1A1K3HW7R6Q0PBAR4T\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/graphql",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
