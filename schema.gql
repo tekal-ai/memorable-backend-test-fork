@@ -133,6 +133,9 @@ type Mutation {
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
 
+  """Updates brand status"""
+  updateBrandStatus(status: String!, brandId: String!): Brand!
+
   """Uploads brand logo"""
   requestLogoUploadData(input: UploadRequestInput!): UploadDataResponse!
 
