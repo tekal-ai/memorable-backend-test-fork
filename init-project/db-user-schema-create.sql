@@ -34,6 +34,7 @@ CREATE TABLE `brand` (
   `logoUrl` varchar(255) DEFAULT NULL,
   `businessAccountId` varchar(255) DEFAULT NULL,
   `sector` text,
+  `status` text NOT NULL,
   `adAccounts` text,
   `socialAccounts` text,
   PRIMARY KEY (`id`),
