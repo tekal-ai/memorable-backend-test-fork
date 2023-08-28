@@ -7,6 +7,10 @@ import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
+import {ErrorMsg} from "../../../common/errors/ErrorCode";
+import {NotFoundError} from "../../../common/errors/NotFoundError";
+import {BrandStatus} from "../entities/BrandStatus";
+import { BadRequestError } from "../../../common/errors/BadRequestError";
 
 @Service()
 export class BrandService extends BaseService {
@@ -36,6 +40,23 @@ export class BrandService extends BaseService {
         const updatedBrand = await this.brandRepository.save(brand);
 
         this.logger.debug(this.updateBrand.name, `Updated brand successfully`);
+        return updatedBrand;
+    }
+
+    async updateBrandStatus(user: User, brandId: string, status: BrandStatus) {
+        this.validateUserAdmin(user, this.updateBrandStatus.name);
+
+        const brand = user.getBrand(brandId);
+        if (!brand){
+            throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND);
+        }
+        if (Object.values(BrandStatus).indexOf(status) < 0){
+            throw new BadRequestError(ErrorMsg.BRAND_STATUS_NOT_FOUND);
+        }
+        brand.updateStatus(status);
+        const updatedBrand = await this.brandRepository.save(brand);
+
+        this.logger.debug(this.updateBrandStatus.name, `Updated brand status successfully`);
         return updatedBrand;
     }
 

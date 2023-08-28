@@ -9,6 +9,7 @@ import {BrandAssetsResponse} from "../entities/BrandAssetsResponse";
 import {BrandAssetsInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandAccountsService} from "../service/BrandAccountsService";
 import {BrandService} from "../service/BrandService";
+import {BrandStatus} from "../entities/BrandStatus";
 
 @Service()
 @Resolver()
@@ -32,6 +33,15 @@ export class BrandResolver {
         @Arg("input") input: UpdateBrandInput,
     ) {
         return await this.brandService.updateBrand(user, brandId, input);
+    }
+
+    @Mutation((_returns) => Brand, {description: "Updates status of a brand"})
+    async updateBrandStatus(
+        @CurrentUser() user: User,
+        @Arg("brandId") brandId: string,
+        @Arg("status") status: BrandStatus,
+    ) {
+        return await this.brandService.updateBrandStatus(user, brandId, status);
     }
 
     @Mutation((_returns) => Brand, {description: "Updates assets of a brand"})

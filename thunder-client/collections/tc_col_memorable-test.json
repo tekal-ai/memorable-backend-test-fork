@@ -146,6 +146,34 @@
                 }
             },
             "tests": []
+        },
+        {
+            "_id": "9f4d0c59-dcd6-48d1-9e60-0cd6c4a66155",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update Brand status",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-08-25T20:11:36.064Z",
+            "modified": "2023-08-25T20:12:08.438Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrandStatus($brandId: String!, $status: BrandStatus!){\n    updateBrandStatus(brandId: $brandId, status: $status){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
+                    "variables": "{\n  \"brandId: \"01H4618V8XGS613BS5BSPZP180\", \"status\": \"DATA_READY\"}"
+                }
+            },
+            "tests": []
         }
     ]
 }
