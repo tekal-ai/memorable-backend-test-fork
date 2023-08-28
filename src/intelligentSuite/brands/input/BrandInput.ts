@@ -26,12 +26,6 @@ export class UpdateBrandInput {
 }
 
 @InputType()
-export class UpdateBrandStatusInput {
-    @Field(() => BrandStatus)
-    status?: BrandStatus;
-}
-
-@InputType()
 export class BrandAssetsInput {
     @Field(() => [AdAccountInput], {nullable: true})
     adAccount?: AdAccountInput[];
