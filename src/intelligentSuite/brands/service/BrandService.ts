@@ -10,6 +10,7 @@ import {BrandRepository} from "../repository/BrandRepository";
 import {ErrorMsg} from "../../../common/errors/ErrorCode";
 import {NotFoundError} from "../../../common/errors/NotFoundError";
 import {BrandStatus} from "../entities/BrandStatus";
+import { BadRequestError } from "../../../common/errors/BadRequestError";
 
 @Service()
 export class BrandService extends BaseService {
@@ -48,6 +49,9 @@ export class BrandService extends BaseService {
         const brand = user.getBrand(brandId);
         if (!brand){
             throw new NotFoundError(ErrorMsg.BRAND_NOT_FOUND);
+        }
+        if (Object.values(BrandStatus).indexOf(status) < 0){
+            throw new BadRequestError(ErrorMsg.BRAND_STATUS_NOT_FOUND);
         }
         brand.updateStatus(status);
         const updatedBrand = await this.brandRepository.save(brand);

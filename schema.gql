@@ -140,7 +140,7 @@ type Mutation {
   updateBrand(input: UpdateBrandInput!, brandId: String!): Brand!
 
   """Updates status of a brand"""
-  updateBrandStatus(input: UpdateBrandStatusInput!, brandId: String!): Brand!
+  updateBrandStatus(status: String!, brandId: String!): Brand!
 
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
@@ -197,10 +197,6 @@ input UpdateBrandInput {
   name: String
   logoUrl: String
   sector: [Sector!]
-}
-
-input UpdateBrandStatusInput {
-  status: BrandStatus!
 }
 
 input BrandAssetsInput {
