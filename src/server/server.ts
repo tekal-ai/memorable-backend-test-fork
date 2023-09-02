@@ -2,7 +2,7 @@ import {ApolloServer} from "apollo-server-express";
 import "dotenv/config";
 import {default as Express, Request, Response} from "express";
 import {execute, subscribe} from "graphql";
-import {graphqlUploadExpress} from "graphql-upload";
+// import {graphqlUploadExpress} from "graphql-upload";
 import helmet from "helmet";
 import {createServer} from "http";
 import "reflect-metadata";
@@ -46,7 +46,7 @@ const main = async () => {
     // Middlewares
     app.use(SentryInit().Handlers.requestHandler());
     app.use(Express.json());
-    app.use(graphqlUploadExpress({maxFileSize: 100_000_000, maxFiles: 10}));
+    // app.use(graphqlUploadExpress({maxFileSize: 100_000_000, maxFiles: 10}));
     app.use(
         helmet({
             hsts: {
