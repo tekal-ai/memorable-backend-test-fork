@@ -7,6 +7,9 @@ import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
+import {BrandStatus} from "../entities/BrandStatus";
+import {BadRequestError} from "../../../common/errors/BadRequestError";
+import {ErrorMsg} from "../../../common/errors/ErrorCode";
 
 @Service()
 export class BrandService extends BaseService {
@@ -15,6 +18,15 @@ export class BrandService extends BaseService {
         private readonly fileHandlerService: FileHandlerService,
     ) {
         super();
+    }
+
+    private validateBrandStatus(status: string){
+        if (status && !(status in BrandStatus)){
+            throw new BadRequestError(
+                ErrorMsg.FIELD_STRING_INVALID,
+                this.logger,
+            );
+        }
     }
 
     async createBrand(user: User, input: CreateBrandInput) {
@@ -36,6 +48,21 @@ export class BrandService extends BaseService {
         const updatedBrand = await this.brandRepository.save(brand);
 
         this.logger.debug(this.updateBrand.name, `Updated brand successfully`);
+        return updatedBrand;
+    }
+
+    async updateBrandStatus(user: User, brandId: string, status: string) {
+        this.validateUserAdmin(user);
+        this.validateBrandStatus(status);
+
+        const brand = user.getBrand(brandId);
+        if (!brand) {
+            throw new BadRequestError(ErrorMsg.BRAND_NOT_FOUND);
+        }
+        brand.updateStatus(status);
+        const updatedBrand = await this.brandRepository.save(brand);
+
+        this.logger.debug(this.updateBrandStatus.name, `Updated brand status successfully`);
         return updatedBrand;
     }
 

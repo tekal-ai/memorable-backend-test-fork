@@ -34,6 +34,15 @@ export class BrandResolver {
         return await this.brandService.updateBrand(user, brandId, input);
     }
 
+    @Mutation((_returns) => Brand, {description: "Updates status of a brand"})
+    async updateBrandStatus(
+        @CurrentUser() user: User,
+        @Arg("brandId") brandId: string,
+        @Arg("input") status: string,
+    ) {
+        return await this.brandService.updateBrandStatus(user, brandId, status);
+    }
+
     @Mutation((_returns) => Brand, {description: "Updates assets of a brand"})
     async updateBrandAssets(
         @CurrentUser() user: User,
