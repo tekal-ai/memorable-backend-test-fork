@@ -69,6 +69,7 @@ type Brand {
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
+  status: String
   businessAccount: BusinessAccount!
 }
 
@@ -129,6 +130,9 @@ type Mutation {
 
   """Updates optional fields of a brand"""
   updateBrand(input: UpdateBrandInput!, brandId: String!): Brand!
+
+  """Updates status of a brand"""
+  updateBrandStatus(input: String!, brandId: String!): Brand!
 
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
