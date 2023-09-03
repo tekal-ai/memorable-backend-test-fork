@@ -173,7 +173,20 @@
                     "variables": "{\n  \"brandId\": \"01H4618V8XGS613BS5BSPZP180\",\n  \"brandStatus\": \"IN_PROGRESS\"\n}"
                 }
             },
-            "tests": []
+            "tests": [
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "notcontains",
+                    "value": "errors"
+                },
+                {
+                    "type": "json-query",
+                    "custom": "json.data.updateBrandStatus.status",
+                    "action": "equal",
+                    "value": "IN_PROGRESS"
+                }
+            ]
         }
     ]
 }
