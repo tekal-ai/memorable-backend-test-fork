@@ -4,6 +4,7 @@ import {BaseEntity} from "../../../common/entities/BaseEntity";
 import {BusinessAccount} from "../../businessAccounts/entities/BusinessAccount";
 import {Sector} from "../../common/entities/Sector";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandStatus} from "./BrandStatus";
 
 @ObjectType()
 @Entity()
@@ -15,6 +16,10 @@ export default class Brand extends BaseEntity {
     @Column({nullable: true})
     @Field({nullable: true})
     logoUrl?: string;
+
+    @Field(() => BrandStatus, {nullable: true})
+    @Column({type: "text", nullable: true})
+    status?: BrandStatus;
 
     @Field(() => [Sector], {nullable: true})
     @Column({type: "simple-array", nullable: true})
@@ -46,6 +51,10 @@ export default class Brand extends BaseEntity {
         this.name = input.name || this.name;
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
+    }
+
+    updateStatus(status: BrandStatus) {
+        this.status = status;
     }
 }
 

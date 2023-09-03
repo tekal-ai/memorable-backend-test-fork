@@ -1,7 +1,7 @@
-CREATE DATABASE test_schema 
-    CHARACTER SET utf8mb4 
+CREATE DATABASE test_schema
+    CHARACTER SET utf8mb4
     COLLATE utf8mb4_bin;
-    
+
 use test_schema;
 
 
@@ -36,6 +36,7 @@ CREATE TABLE `brand` (
   `sector` text,
   `adAccounts` text,
   `socialAccounts` text,
+  `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ce8346e2deaf4543dd3f83304a3` (`businessAccountId`),
   CONSTRAINT `FK_ce8346e2deaf4543dd3f83304a3` FOREIGN KEY (`businessAccountId`) REFERENCES `business_account` (`id`)

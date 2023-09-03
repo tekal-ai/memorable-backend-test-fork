@@ -1,10 +1,13 @@
 import {Service} from "typedi";
+import {BadRequestError} from "../../../common/errors/BadRequestError";
+import {ErrorMsg} from "../../../common/errors/ErrorCode";
 import {UploadRequestInput} from "../../common/inputs/UploadRequestInput";
 import {BaseService} from "../../common/service/BaseService";
 import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse";
 import {FileHandlerService} from "../../fileHandler/service/FileHandlerService";
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
+import {BrandStatus} from "../entities/BrandStatus";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
 
@@ -29,13 +32,33 @@ export class BrandService extends BaseService {
     }
 
     async updateBrand(user: User, brandId: string, input: UpdateBrandInput) {
-        this.validateUserAdmin(user, this.createBrand.name);
+        this.validateUserAdmin(user, this.updateBrand.name);
 
         const brand = user.getBrand(brandId);
         brand.update(input);
         const updatedBrand = await this.brandRepository.save(brand);
 
         this.logger.debug(this.updateBrand.name, `Updated brand successfully`);
+        return updatedBrand;
+    }
+
+    private isValidStatus = (status: BrandStatus) => {
+        return Object.values(BrandStatus).includes(status);
+    };
+
+    async updateBrandStatus(user: User, brandId: string, status: BrandStatus) {
+        this.validateUserAdmin(user, this.updateBrandStatus.name);
+
+        if (!this.isValidStatus(status)) {
+            throw new BadRequestError(ErrorMsg.INVALID_BRAND_STATUS, this.logger, this.updateBrandStatus.name);
+        }
+
+        const brand = user.getBrand(brandId);
+
+        brand.updateStatus(status);
+        const updatedBrand = await this.brandRepository.save(brand);
+
+        this.logger.debug(this.updateBrand.name, `Updated brand status successfully`);
         return updatedBrand;
     }
 

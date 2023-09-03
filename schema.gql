@@ -66,10 +66,18 @@ type Brand {
   updatedAt: DateTime!
   name: String!
   logoUrl: String
+  status: BrandStatus
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
   businessAccount: BusinessAccount!
+}
+
+enum BrandStatus {
+  IN_PROGRESS
+  DATA_READY
+  MODEL_TRAINING
+  READY
 }
 
 enum Sector {
@@ -129,6 +137,9 @@ type Mutation {
 
   """Updates optional fields of a brand"""
   updateBrand(input: UpdateBrandInput!, brandId: String!): Brand!
+
+  """Updates the status of a brand"""
+  updateBrandStatus(input: String!, brandId: String!): Brand!
 
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
