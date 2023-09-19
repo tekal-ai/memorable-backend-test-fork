@@ -36,6 +36,7 @@ CREATE TABLE brand (
   sector text,
   adAccounts text,
   socialAccounts text,
+  status enum ('IN_PROGRESS','DATA_READY','MODEL_TRAINING','READY') NOT NULL DEFAULT 'IN_PROGRESS',
   PRIMARY KEY (id),
   KEY FK_ce8346e2deaf4543dd3f83304a3 (businessAccountId),
   CONSTRAINT FK_ce8346e2deaf4543dd3f83304a3 FOREIGN KEY (businessAccountId) REFERENCES business_account (id)

@@ -18,10 +18,10 @@
 --
 -- Dumping data for table `brand`
 --
-use test_schema;
+USE test_schema;
 LOCK TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
-INSERT INTO `brand` VALUES ('01H4618V8XGS613BS5BSPZP180','2023-06-30 11:33:32.580809','2023-06-30 11:33:32.580809','Pharma Tecnologies','logoUrl','01H4616SGMFZ1GX71ZG5DCZMFD','PharmaceuticalsAndBiotechnology',NULL,NULL);
+INSERT INTO `brand` VALUES ('01H4618V8XGS613BS5BSPZP180','2023-06-30 11:33:32.580809','2023-06-30 11:33:32.580809','Pharma Tecnologies','logoUrl','01H4616SGMFZ1GX71ZG5DCZMFD','PharmaceuticalsAndBiotechnology',NULL,NULL,'IN_PROGRESS');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 UNLOCK TABLES;
 
