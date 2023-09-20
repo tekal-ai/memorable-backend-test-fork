@@ -4,6 +4,7 @@ import {BaseEntity} from "../../../common/entities/BaseEntity";
 import {BusinessAccount} from "../../businessAccounts/entities/BusinessAccount";
 import {Sector} from "../../common/entities/Sector";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandStatus} from "./BrandStatus";
 
 @ObjectType()
 @Entity()
@@ -32,6 +33,10 @@ export default class Brand extends BaseEntity {
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
 
+    @Field(() => BrandStatus, {defaultValue: BrandStatus.IN_PROGRESS})
+    @Column({type: "enum", enum: BrandStatus, default: BrandStatus.IN_PROGRESS})
+    status!: BrandStatus;
+
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();
         brand.setId();
@@ -39,6 +44,7 @@ export default class Brand extends BaseEntity {
         brand.sector = input.sector;
         brand.logoUrl = input.logoUrl || brand.logoUrl;
         brand.businessAccount = businessAccount;
+        brand.status = BrandStatus.IN_PROGRESS;
         return brand;
     }
 
