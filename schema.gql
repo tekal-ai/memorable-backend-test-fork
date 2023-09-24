@@ -130,6 +130,9 @@ type Mutation {
   """Updates optional fields of a brand"""
   updateBrand(input: UpdateBrandInput!, brandId: String!): Brand!
 
+  """Updates status of a brand"""
+  updateBrandStatus(input: BrandStatusInput!, brandId: String!): BrandStatusHistory!
+
   """Updates assets of a brand"""
   updateBrandAssets(input: BrandAssetsInput!, brandId: String!): Brand!
 
@@ -185,6 +188,16 @@ input UpdateBrandInput {
   name: String
   logoUrl: String
   sector: [Sector!]
+}
+
+type BrandStatusHistory {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input BrandStatusInput {
+  status: String!
 }
 
 input BrandAssetsInput {
