@@ -4,6 +4,7 @@ import {BaseEntity} from "../../../common/entities/BaseEntity";
 import {BusinessAccount} from "../../businessAccounts/entities/BusinessAccount";
 import {Sector} from "../../common/entities/Sector";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import BrandStatus from "./BrandStatus";
 
 @ObjectType()
 @Entity()
@@ -31,6 +32,10 @@ export default class Brand extends BaseEntity {
     @ManyToOne(() => BusinessAccount)
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
+
+    @ManyToOne(() => BrandStatus)
+    @Field(() => BrandStatus)
+    brandStatus!: BrandStatus;
 
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();
