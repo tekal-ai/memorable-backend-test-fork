@@ -52,6 +52,10 @@ export default class Brand extends BaseEntity {
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
     }
+
+    updateBrandStatus(input: BrandStatus){
+        this.brandStatus = input || this.brandStatus
+    }
 }
 
 export type BrandInfo = {

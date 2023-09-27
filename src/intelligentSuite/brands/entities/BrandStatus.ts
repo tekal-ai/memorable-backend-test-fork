@@ -1,6 +1,8 @@
-import {BaseEntity, Column, Entity, OneToMany} from "typeorm";
+import {Column, Entity, OneToMany} from "typeorm";
 import {Field, ObjectType} from "type-graphql";
 import Brand from "./Brand";
+import {BaseEntity} from "../../../common/entities/BaseEntity";
+import {BrandStatusInput} from "../input/BrandInput";
 
 export enum ValidBrandStatus {
     IN_PROGRESS = "IN_PROGRESS",
@@ -20,9 +22,12 @@ export default class BrandStatus extends BaseEntity {
     @Field(() => [Brand])
     brand!: Brand;
 
-    @Column()
-    @Field()
-    createdDate! : Date
+    static create(brand: Brand, input: BrandStatusInput) {
+        const brandStatus = new BrandStatus()
+        brandStatus.setId();
+        brandStatus.status = input.status
+        brandStatus.brand = brand
 
-
+        return brandStatus
+    }
 }
