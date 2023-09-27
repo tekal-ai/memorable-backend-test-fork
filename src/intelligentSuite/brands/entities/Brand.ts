@@ -33,9 +33,9 @@ export default class Brand extends BaseEntity {
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
 
-    @ManyToOne(() => BrandStatus, {nullable: true, eager: true})
-    @Field(() => BrandStatus, {nullable: true})
-    status!: BrandStatus;
+    @ManyToOne(() => BrandStatus)
+    @Field(() => BrandStatus)
+    status!: BrandStatus; //Si lo hago opcional te puede pasar que termines un brand sin cambiarle de estado nunca
 
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();
@@ -52,10 +52,6 @@ export default class Brand extends BaseEntity {
         this.name = input.name || this.name;
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
-    }
-
-    updateBrandStatus(input: BrandStatus){
-        this.status = input || this.status
     }
 }
 

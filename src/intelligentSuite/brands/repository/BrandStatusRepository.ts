@@ -14,7 +14,7 @@ export class BrandStatusRepository extends BaseRepository<BrandStatus> {
     }
 
     getQuerySet(): BrandStatusQuerySet<BrandStatus> {
-        const queryBuilder = this.repository.createQueryBuilder("Brand");
-        return new BrandQuerySet(queryBuilder, "Brand");
+        const queryBuilder = this.repository.createQueryBuilder("BrandStatus");
+        return new BrandQuerySet(queryBuilder, "BrandStatus");
     }
 }
