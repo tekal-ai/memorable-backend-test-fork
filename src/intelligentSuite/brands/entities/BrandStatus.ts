@@ -18,7 +18,7 @@ export default class BrandStatus extends BaseEntity {
     @Field()
     status! : ValidBrandStatus
 
-    @OneToMany(() => Brand, (brand) => brand.brandStatus, {eager: true})
+    @OneToMany(() => Brand, (brand) => brand.status, {eager: true})
     @Field(() => [Brand])
     brand!: Brand;
 

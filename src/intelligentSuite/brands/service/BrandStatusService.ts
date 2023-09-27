@@ -18,7 +18,7 @@ export class BrandStatusService extends BaseService {
 
         const brand = user.getBrand(brandId);
 
-        if (brand.brandStatus.status == input.status) {
+        if (brand.status.status == input.status) {
             this.logger.info(this.updateBrandStatus.name, "the brand is actually in the selected status")
             return brand
         }
@@ -26,7 +26,7 @@ export class BrandStatusService extends BaseService {
         const newBrandStatus = BrandStatus.create(brand, input)
         await this.brandStatusRepository.save(newBrandStatus)
 
-        brand.brandStatus = newBrandStatus
+        brand.updateBrandStatus(newBrandStatus)
         await this.brandRepository.save(brand);
         this.logger.debug(this.updateBrandStatus.name, `Updated brand status successfully`);
         return brand;

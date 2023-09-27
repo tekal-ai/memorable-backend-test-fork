@@ -29,7 +29,7 @@ export class BrandService extends BaseService {
     }
 
     async updateBrand(user: User, brandId: string, input: UpdateBrandInput) {
-        this.validateUserAdmin(user, this.createBrand.name);
+        this.validateUserAdmin(user, this.updateBrand.name);
 
         const brand = user.getBrand(brandId);
         brand.update(input);
