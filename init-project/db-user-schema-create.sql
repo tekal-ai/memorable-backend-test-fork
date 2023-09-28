@@ -1,8 +1,8 @@
-CREATE DATABASE test_schema 
+CREATE DATABASE IF NOT EXISTS test_memorable_db
     CHARACTER SET utf8mb4 
     COLLATE utf8mb4_bin;
     
-use test_schema;
+use test_memorable_db;
 
 
 
@@ -24,6 +24,18 @@ CREATE TABLE `business_account` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Table structure for table `brand_status`
+--
+
+DROP TABLE IF EXISTS `brand_status`;
+CREATE TABLE `brand_status` (
+  `id` varchar(255) NOT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `brand`;
 CREATE TABLE `brand` (
