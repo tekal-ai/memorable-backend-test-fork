@@ -24,7 +24,7 @@ export class UpdateBrandInput {
     @Field(() => [Sector], {nullable: true})
     sector?: Sector[];
 
-    @Field(() => BrandStatus, {defaultValue: BrandStatus.IN_PROGRESS, nullable: true})
+    @Field(() => BrandStatus, {nullable: true})
     status?: BrandStatus;
 }
 @InputType()

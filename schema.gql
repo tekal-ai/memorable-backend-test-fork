@@ -194,7 +194,7 @@ input UpdateBrandInput {
   name: String
   logoUrl: String
   sector: [Sector!]
-  status: BrandStatus = IN_PROGRESS
+  status: BrandStatus
 }
 
 input BrandAssetsInput {
