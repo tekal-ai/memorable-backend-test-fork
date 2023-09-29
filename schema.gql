@@ -70,6 +70,7 @@ type Brand {
   adAccounts: [String!]
   socialAccounts: [String!]
   businessAccount: BusinessAccount!
+  status: BrandStatus
 }
 
 enum Sector {
@@ -121,6 +122,14 @@ enum Sector {
   OnlineEducationPlatforms
   VocationalAndTechnicalSchools
   CorporateTrainingAndDevelopment
+}
+
+"""Brand Status"""
+enum BrandStatus {
+  IN_PROGRESS
+  DATA_READY
+  MODEL_TRAINING
+  READY
 }
 
 type Mutation {
@@ -185,6 +194,7 @@ input UpdateBrandInput {
   name: String
   logoUrl: String
   sector: [Sector!]
+  status: BrandStatus
 }
 
 input BrandAssetsInput {

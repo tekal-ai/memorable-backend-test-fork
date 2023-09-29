@@ -1,8 +1,8 @@
-import {AnyObject, PipelineStage} from "mongoose";
+import {AnyObject, FilterQuery, PipelineStage} from "mongoose";
 import {MongoPipelineStage} from "./MongoPipeline";
 
 export type MongoMatchValueType = string | number | Date | object;
-export type MongoFilters = {$and: AnyObject};
+export type MongoFilters = FilterQuery<any>;
 
 export class MongoMatch implements MongoPipelineStage {
     private matches: AnyObject[] = [];

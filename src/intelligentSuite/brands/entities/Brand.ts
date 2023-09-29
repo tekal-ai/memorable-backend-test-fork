@@ -2,6 +2,7 @@ import {Field, ObjectType} from "type-graphql";
 import {Column, Entity, ManyToOne} from "typeorm";
 import {BaseEntity} from "../../../common/entities/BaseEntity";
 import {BusinessAccount} from "../../businessAccounts/entities/BusinessAccount";
+import {BrandStatus} from "../../common/entities/Brand";
 import {Sector} from "../../common/entities/Sector";
 import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 
@@ -32,6 +33,10 @@ export default class Brand extends BaseEntity {
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
 
+    @Field(() => BrandStatus, {defaultValue: BrandStatus.IN_PROGRESS})
+    @Column({type: "enum", enum: BrandStatus, default: BrandStatus.IN_PROGRESS})
+    status!: BrandStatus;
+
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();
         brand.setId();
@@ -39,6 +44,7 @@ export default class Brand extends BaseEntity {
         brand.sector = input.sector;
         brand.logoUrl = input.logoUrl || brand.logoUrl;
         brand.businessAccount = businessAccount;
+        brand.status = BrandStatus.IN_PROGRESS;
         return brand;
     }
 
@@ -46,6 +52,7 @@ export default class Brand extends BaseEntity {
         this.name = input.name || this.name;
         this.sector = input.sector || this.sector;
         this.logoUrl = input.logoUrl || this.logoUrl;
+        this.status = input.status || this.status;
     }
 }
 
