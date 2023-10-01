@@ -18,7 +18,7 @@ export class BrandStatusService extends BaseService {
 
         const brand = user.getBrand(brandId);
 
-        if (brand.status.status == input.status) {
+        if (brand.status?.status == input.status) {
             this.logger.info(this.updateBrandStatus.name, "the brand is actually in the selected status, nothing to update")
             return brand
         }

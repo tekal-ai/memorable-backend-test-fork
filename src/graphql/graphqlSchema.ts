@@ -5,7 +5,6 @@ import {buildSchema, registerEnumType} from "type-graphql";
 import {Container} from "typedi";
 import {ErrorCode, ErrorMsg} from "../common/errors/ErrorCode";
 import {SortType} from "../common/queries/Sort";
-import {BrandStatus} from "../intelligentSuite/brands/entities/BrandStatus";
 import {BrandResolver} from "../intelligentSuite/brands/resolvers/BrandResolver";
 import {BusinessAccountResolver} from "../intelligentSuite/businessAccounts/resolvers/BusinessAccountResolver";
 import {AdAccountType, SocialAccountType} from "../intelligentSuite/common/entities/Assets";
@@ -22,12 +21,13 @@ import {InvitationType} from "../intelligentSuite/invitations/entities/Invitatio
 import {InvitationResolver} from "../intelligentSuite/invitations/resolvers/InvitationResolver";
 import {UserResolver} from "../intelligentSuite/users/resolvers/UserResolver";
 import {subscriptionConnection} from "../pubsub/SubscriptionConnection";
+import {ValidBrandStatus} from "../intelligentSuite/brands/entities/BrandStatus";
 
 const resolvers = [UserResolver, BusinessAccountResolver, BrandResolver, InvitationResolver] as const;
 
 export const graphqlSchema = async (emitSchema = false, usePubSub = true) => {
     registerEnumType(OrderingDirection, {name: "OrderingDirection", description: "Ordering direction"});
-    registerEnumType(BrandStatus, {name: "BrandStatus", description: "Brand Status"});
+    registerEnumType(ValidBrandStatus, {name: "ValidBrandStatus", description: "Brand Status"});
     registerEnumType(LabeledMetricValue, {name: "LabeledMetricValue", description: "Labeled Metric Value"});
     registerEnumType(ErrorCode, {name: "ErrorCode", description: "Api error codes"});
     registerEnumType(FileType, {name: "FileType"});

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: test_schema
+-- Host: 127.0.0.1    Database: test_memorable_db
 -- ------------------------------------------------------
 -- Server version	8.0.31
 
@@ -15,15 +15,28 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+--
+-- Dumping data for table `brand_status`
+--
+use test_memorable_db;
+LOCK TABLES `brand_status` WRITE;
+/*!40000 ALTER TABLE `brand_status` DISABLE KEYS */;
+INSERT INTO `brand_status` VALUES ('01H4618V8XGS613BS5BSPZP183','IN_PROGRESS','2023-10-01 16:46:00.580809','2023-10-01 16:46:00.580809');
+/*!40000 ALTER TABLE `brand_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 --
 -- Dumping data for table `brand`
 --
-use test_schema;
+use test_memorable_db;
 LOCK TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
-INSERT INTO `brand` VALUES ('01H4618V8XGS613BS5BSPZP180','2023-06-30 11:33:32.580809','2023-06-30 11:33:32.580809','Pharma Tecnologies','logoUrl','01H4616SGMFZ1GX71ZG5DCZMFD','PharmaceuticalsAndBiotechnology',NULL,NULL);
+INSERT INTO `brand` VALUES ('01H4618V8XGS613BS5BSPZP180','2023-06-30 11:33:32.580809','2023-06-30 11:33:32.580809','Pharma Tecnologies','logoUrl','01H4616SGMFZ1GX71ZG5DCZMFD','PharmaceuticalsAndBiotechnology',NULL,NULL,'01H4618V8XGS613BS5BSPZP183');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 UNLOCK TABLES;
+
 
 --
 -- Dumping data for table `business_account`

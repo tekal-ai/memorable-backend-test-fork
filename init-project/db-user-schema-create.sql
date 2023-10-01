@@ -4,13 +4,15 @@ CREATE DATABASE IF NOT EXISTS test_memorable_db
     
 use test_memorable_db;
 
-
+DROP TABLE IF EXISTS `invitation`;
+DROP TABLE IF EXISTS `brand`;
+DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `business_account`;
+DROP TABLE IF EXISTS `brand_status`;
 
 --
 -- Table structure for table `business_account`
 --
-
-DROP TABLE IF EXISTS `business_account`;
 CREATE TABLE `business_account` (
   `id` varchar(255) NOT NULL,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -27,17 +29,17 @@ CREATE TABLE `business_account` (
 --
 -- Table structure for table `brand_status`
 --
-
-DROP TABLE IF EXISTS `brand_status`;
 CREATE TABLE `brand_status` (
   `id` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `brand`;
+--
+-- Table structure for table `brand`
+--
 CREATE TABLE `brand` (
   `id` varchar(255) NOT NULL,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -48,15 +50,18 @@ CREATE TABLE `brand` (
   `sector` text,
   `adAccounts` text,
   `socialAccounts` text,
+  `brandStatusId` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ce8346e2deaf4543dd3f83304a3` (`businessAccountId`),
-  CONSTRAINT `FK_ce8346e2deaf4543dd3f83304a3` FOREIGN KEY (`businessAccountId`) REFERENCES `business_account` (`id`)
+  CONSTRAINT `FK_ce8346e2deaf4543dd3f83304a3` FOREIGN KEY (`businessAccountId`) REFERENCES `business_account` (`id`),
+  KEY `FK_Brand_brandStatus` (`brandStatusId`),
+  CONSTRAINT `FK_Brand_brandStatus` FOREIGN KEY (`brandStatusId`) REFERENCES `brand_status` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 --
 -- Table structure for table `user`
 --
-
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` varchar(255) NOT NULL,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -81,8 +86,6 @@ CREATE TABLE `user` (
 --
 -- Table structure for table `invitation`
 --
-
-DROP TABLE IF EXISTS `invitation`;
 CREATE TABLE `invitation` (
   `id` varchar(255) NOT NULL,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),

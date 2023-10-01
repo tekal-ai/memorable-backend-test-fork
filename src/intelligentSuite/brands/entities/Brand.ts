@@ -35,7 +35,7 @@ export default class Brand extends BaseEntity {
 
     @ManyToOne(() => BrandStatus)
     @Field(() => BrandStatus)
-    status!: BrandStatus; //Si lo hago opcional te puede pasar que termines un brand sin cambiarle de estado nunca
+    status?: BrandStatus;
 
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();
@@ -44,7 +44,6 @@ export default class Brand extends BaseEntity {
         brand.sector = input.sector;
         brand.logoUrl = input.logoUrl || brand.logoUrl;
         brand.businessAccount = businessAccount;
-        brand.status = input.status || brand.status
         return brand;
     }
 
