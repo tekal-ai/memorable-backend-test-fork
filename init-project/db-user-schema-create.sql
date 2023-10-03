@@ -34,6 +34,7 @@ CREATE TABLE `brand_status` (
   `status` varchar(255) NOT NULL,
   `createdAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updatedAt` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `brandId` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -58,6 +59,10 @@ CREATE TABLE `brand` (
   CONSTRAINT `FK_Brand_brandStatus` FOREIGN KEY (`brandStatusId`) REFERENCES `brand_status` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Brand Status modification to add foreign key
+--
+ALTER TABLE `brand_status` ADD FOREIGN KEY `FK_BrandStatus_Brand` (`brandId`) REFERENCES `brand`(`id`);
 
 --
 -- Table structure for table `user`

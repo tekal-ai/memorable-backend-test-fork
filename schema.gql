@@ -129,6 +129,7 @@ type BrandStatus {
   createdAt: DateTime!
   updatedAt: DateTime!
   status: String!
+  brand: Brand!
 }
 
 type Mutation {

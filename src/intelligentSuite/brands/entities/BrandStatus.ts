@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, OneToOne} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from "typeorm";
 import {Field, ObjectType} from "type-graphql";
 import Brand from "./Brand";
 import {BaseEntity} from "../../../common/entities/BaseEntity";
@@ -21,10 +21,15 @@ export default class BrandStatus extends BaseEntity {
     @Field()
     status!: string
 
+    @OneToOne(() => Brand, (brand: Brand) => brand.id)
+    @Field(() => Brand)
+    brand!: Brand;
+
     static create(brand: Brand, input: BrandStatusInput) {
         const brandStatus = new BrandStatus()
         brandStatus.setId();
         brandStatus.status = input.status
+        brandStatus.brand = brand
 
         return brandStatus
     }
