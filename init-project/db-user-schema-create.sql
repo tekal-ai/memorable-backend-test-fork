@@ -4,7 +4,11 @@ CREATE DATABASE IF NOT EXISTS test_memorable_db
     
 use test_memorable_db;
 
+
 DROP TABLE IF EXISTS `invitation`;
+
+ALTER TABLE `brand_status` DROP FOREIGN KEY `brand_status_ibfk_1`;
+
 DROP TABLE IF EXISTS `brand`;
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `business_account`;
