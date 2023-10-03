@@ -21,13 +21,11 @@ import {InvitationType} from "../intelligentSuite/invitations/entities/Invitatio
 import {InvitationResolver} from "../intelligentSuite/invitations/resolvers/InvitationResolver";
 import {UserResolver} from "../intelligentSuite/users/resolvers/UserResolver";
 import {subscriptionConnection} from "../pubsub/SubscriptionConnection";
-import {ValidBrandStatus} from "../intelligentSuite/brands/entities/BrandStatus";
 
 const resolvers = [UserResolver, BusinessAccountResolver, BrandResolver, InvitationResolver] as const;
 
 export const graphqlSchema = async (emitSchema = false, usePubSub = true) => {
     registerEnumType(OrderingDirection, {name: "OrderingDirection", description: "Ordering direction"});
-    registerEnumType(ValidBrandStatus, {name: "ValidBrandStatus", description: "Brand Status"});
     registerEnumType(LabeledMetricValue, {name: "LabeledMetricValue", description: "Labeled Metric Value"});
     registerEnumType(ErrorCode, {name: "ErrorCode", description: "Api error codes"});
     registerEnumType(FileType, {name: "FileType"});

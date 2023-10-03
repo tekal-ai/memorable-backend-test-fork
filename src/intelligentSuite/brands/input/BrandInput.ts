@@ -34,8 +34,8 @@ export class BrandAssetsInput {
 
 @InputType()
 export class BrandStatusInput {
-    @Field(() => ValidBrandStatus)
-    status!: ValidBrandStatus;
+    @Field(() => String)
+    status!: string;
 }
 
 @InputType()

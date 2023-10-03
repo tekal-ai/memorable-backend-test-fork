@@ -4,31 +4,26 @@ import {User} from "../../users/entities/User";
 import {BrandStatusInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
 import {BrandStatusRepository} from "../repository/BrandStatusRepository";
-import BrandStatus from "../entities/BrandStatus";
+import BrandStatus, {ValidBrandStatus} from "../entities/BrandStatus";
+import {BadRequestError} from "../../../common/errors/BadRequestError";
+import {ErrorMsg} from "../../../common/errors/ErrorCode";
+import Brand from "../entities/Brand";
 
 @Service()
 export class BrandStatusService extends BaseService {
-    constructor(private readonly brandRepository: BrandRepository, private readonly brandStatusRepository: BrandStatusRepository) {
+    constructor(private readonly brandStatusRepository: BrandStatusRepository) {
         super();
     }
 
-    async updateBrandStatus(user: User, brandId: string, input: BrandStatusInput) {
-        this.logger.verbose(this.updateBrandStatus.name, `Updating status for brand`, {brand: brandId});
-        this.validateUserAdmin(user, this.updateBrandStatus.name);
-
-        const brand = user.getBrand(brandId);
-
-        if (brand.status?.status == input.status) {
-            this.logger.info(this.updateBrandStatus.name, "the brand is actually in the selected status, nothing to update")
-            return brand
-        }
-
+    async createBrandStatus(brand: Brand, input: BrandStatusInput) {
+        this.logger.info(this.createBrandStatus.name, "Creating new status for brand", {brand: brand.id})
         const newBrandStatus = BrandStatus.create(brand, input)
-        await this.brandStatusRepository.save(newBrandStatus)
+        return await this.brandStatusRepository.save(newBrandStatus)
+    }
 
-        brand.status = newBrandStatus
-        await this.brandRepository.save(brand);
-        this.logger.debug(this.updateBrandStatus.name, `Updated brand status successfully`);
-        return brand;
+    isValidBrandStatus(status: string) {
+        if (!Object.values(ValidBrandStatus).includes(status as ValidBrandStatus)) {
+            throw new BadRequestError(ErrorMsg.INVALID_BRAND_STATUS)
+        }
     }
 }

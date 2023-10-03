@@ -70,7 +70,7 @@ type Brand {
   adAccounts: [String!]
   socialAccounts: [String!]
   businessAccount: BusinessAccount!
-  status: BrandStatus!
+  brandStatus: BrandStatus!
 }
 
 enum Sector {
@@ -129,7 +129,6 @@ type BrandStatus {
   createdAt: DateTime!
   updatedAt: DateTime!
   status: String!
-  brand: [Brand!]!
 }
 
 type Mutation {
@@ -228,15 +227,7 @@ enum SocialAccountType {
 }
 
 input BrandStatusInput {
-  status: ValidBrandStatus!
-}
-
-"""Brand Status"""
-enum ValidBrandStatus {
-  IN_PROGRESS
-  DATA_READY
-  MODEL_TRAINING
-  READY
+  status: String!
 }
 
 type UploadDataResponse {

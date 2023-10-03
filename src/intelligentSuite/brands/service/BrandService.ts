@@ -5,14 +5,18 @@ import {UploadDataResponse} from "../../fileHandler/entities/UploadDataResponse"
 import {FileHandlerService} from "../../fileHandler/service/FileHandlerService";
 import {User} from "../../users/entities/User";
 import Brand from "../entities/Brand";
-import {CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
+import {BrandStatusInput, CreateBrandInput, UpdateBrandInput} from "../input/BrandInput";
 import {BrandRepository} from "../repository/BrandRepository";
+import {BrandStatusService} from "./BrandStatusService";
+import {BadRequestError} from "../../../common/errors/BadRequestError";
+import {ErrorMsg} from "../../../common/errors/ErrorCode";
 
 @Service()
 export class BrandService extends BaseService {
     constructor(
         private readonly brandRepository: BrandRepository,
         private readonly fileHandlerService: FileHandlerService,
+        private readonly brandStatusService: BrandStatusService,
     ) {
         super();
     }
@@ -49,5 +53,26 @@ export class BrandService extends BaseService {
         );
         this.logger.debug(this.getLogoUploadData.name, `Got logo upload data successfully`);
         return result;
+    }
+
+    async updateBrandStatus(user: User, brandId: string, input: BrandStatusInput) {
+        this.brandStatusService.isValidBrandStatus(input.status);
+        this.logger.info(this.updateBrandStatus.name, `Updating status for brand`, {brand: brandId});
+        this.validateUserAdmin(user, this.updateBrandStatus.name);
+
+        const brand = await this.brandRepository.getByIDWithStatus(brandId);
+        if (!brand){
+            throw new BadRequestError(ErrorMsg.BRAND_NOT_FOUND)
+        }
+
+        if (brand.brandStatus?.isSameStatus(input.status)) {
+            this.logger.info(this.updateBrandStatus.name, "the brand is actually in the selected status, nothing to update")
+            return brand
+        }
+
+        brand.brandStatus = await this.brandStatusService.createBrandStatus(brand, input)
+        await this.brandRepository.save(brand);
+        this.logger.info(this.updateBrandStatus.name, `Updated brand status successfully`);
+        return brand;
     }
 }

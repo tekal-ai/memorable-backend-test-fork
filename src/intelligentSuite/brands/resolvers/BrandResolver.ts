@@ -51,7 +51,7 @@ export class BrandResolver {
         @Arg("brandId") brandId: string,
         @Arg("input") input: BrandStatusInput,
     ) {
-        return await this.brandStatusService.updateBrandStatus(user, brandId, input);
+        return await this.brandService.updateBrandStatus(user, brandId, input);
     }
 
     @Mutation((_returns) => UploadDataResponse, {description: "Uploads brand logo"})

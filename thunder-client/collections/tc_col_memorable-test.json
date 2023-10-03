@@ -1,6 +1,7 @@
 {
     "_id": "bdfbad21-e244-4370-bf29-ebc7989769c1",
-    "colName": "memorable-test",
+    "client": "Thunder Client",
+    "collectionName": "memorable-test",
     "created": "2023-07-03T09:31:31.740Z",
     "sortNum": 10000,
     "folders": [],
@@ -85,7 +86,7 @@
                 "raw": "",
                 "form": [],
                 "graphql": {
-                    "query": "query {\n    getLoggedInUser{\n        id,\n        name,\n        email,\n        isAdmin,\n        businessAccount {\n            id,\n            businessName,\n            businessLogoUrl,\n            businessPhone,\n            website,\n            address,\n            brands {\n                id,\n                name,\n                logoUrl,\n                sector,\n                status,\n                adAccounts,\n                socialAccounts,\n            }\n        }\n    }\n}",
+                    "query": "query {\n    getLoggedInUser{\n        id,\n        name,\n        email,\n        isAdmin,\n        businessAccount {\n            id,\n            businessName,\n            businessLogoUrl,\n            businessPhone,\n            website,\n            address,\n            brands {\n                id,\n                name,\n                logoUrl,\n                sector,\n                              adAccounts,\n                socialAccounts,\n            }\n        }\n    }\n}",
                     "variables": "{}"
                 }
             },
@@ -143,6 +144,62 @@
                 "graphql": {
                     "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
                     "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "9f4d0c59-dcd6-48d1-9e60-0cd6c4a66156",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update Brand Status",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-07-03T09:42:36.064Z",
+            "modified": "2023-07-03T09:44:08.438Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrandStatus($brandId: String!, $input: BrandStatusInput!){\n    updateBrandStatus(brandId: $brandId, input: $input){\n        id,\n    }\n}",
+                    "variables": "{\n  \"input\": {\n    \"status\": \"DATA_READY\"\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "9f4d0c59-dcd6-48d1-9e60-0cd6c4a66156",
+            "colId": "bdfbad21-e244-4370-bf29-ebc7989769c1",
+            "containerId": "",
+            "name": "update Brand Status with invalid status",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-07-03T09:42:36.064Z",
+            "modified": "2023-07-03T09:44:08.438Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrandStatus($brandId: String!, $input: BrandStatusInput!){\n    updateBrandStatus(brandId: $brandId, input: $input){\n        id,\n    }\n}",
+                    "variables": "{\n  \"input\": {\n    \"status\": \"NOT_VALID_STATUS\"\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
                 }
             },
             "tests": []

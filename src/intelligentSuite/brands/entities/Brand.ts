@@ -1,5 +1,5 @@
 import {Field, ObjectType} from "type-graphql";
-import {Column, Entity, ManyToOne} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne} from "typeorm";
 import {BaseEntity} from "../../../common/entities/BaseEntity";
 import {BusinessAccount} from "../../businessAccounts/entities/BusinessAccount";
 import {Sector} from "../../common/entities/Sector";
@@ -33,9 +33,10 @@ export default class Brand extends BaseEntity {
     @Field(() => BusinessAccount)
     businessAccount!: BusinessAccount;
 
-    @ManyToOne(() => BrandStatus)
+    @OneToOne(() => BrandStatus, (brandStatus: BrandStatus) => brandStatus.id)
+    @JoinColumn()
     @Field(() => BrandStatus)
-    status?: BrandStatus;
+    brandStatus?: BrandStatus;
 
     static create(businessAccount: BusinessAccount, input: CreateBrandInput) {
         const brand = new Brand();

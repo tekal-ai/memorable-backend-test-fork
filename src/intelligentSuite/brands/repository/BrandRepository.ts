@@ -25,6 +25,10 @@ export class BrandRepository extends BaseRepository<Brand> {
         super(repository);
     }
 
+    async getByIDWithStatus(brandId: string){
+        return this.getQuerySet().filterById(brandId).withBrandStatus().getOne()
+    }
+
     getQuerySet(): BrandQuerySet<Brand> {
         const queryBuilder = this.repository.createQueryBuilder("Brand");
         return new BrandQuerySet(queryBuilder, "Brand");
