@@ -5,7 +5,7 @@ import {buildSchema, registerEnumType} from "type-graphql";
 import {Container} from "typedi";
 import {ErrorCode, ErrorMsg} from "../common/errors/ErrorCode";
 import {SortType} from "../common/queries/Sort";
-import {BrandStatus} from "../intelligentSuite/brands/entities/BrandStatus";
+import {BrandStatusEnum} from "../intelligentSuite/brands/entities/BrandStatusEnum";
 import {BrandResolver} from "../intelligentSuite/brands/resolvers/BrandResolver";
 import {BusinessAccountResolver} from "../intelligentSuite/businessAccounts/resolvers/BusinessAccountResolver";
 import {AdAccountType, SocialAccountType} from "../intelligentSuite/common/entities/Assets";
@@ -27,7 +27,7 @@ const resolvers = [UserResolver, BusinessAccountResolver, BrandResolver, Invitat
 
 export const graphqlSchema = async (emitSchema = false, usePubSub = true) => {
     registerEnumType(OrderingDirection, {name: "OrderingDirection", description: "Ordering direction"});
-    registerEnumType(BrandStatus, {name: "BrandStatus", description: "Brand Status"});
+    registerEnumType(BrandStatusEnum, {name: "BrandStatus", description: "Brand Status"});
     registerEnumType(LabeledMetricValue, {name: "LabeledMetricValue", description: "Labeled Metric Value"});
     registerEnumType(ErrorCode, {name: "ErrorCode", description: "Api error codes"});
     registerEnumType(FileType, {name: "FileType"});

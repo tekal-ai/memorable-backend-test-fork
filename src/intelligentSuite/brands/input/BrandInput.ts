@@ -63,3 +63,9 @@ export class BrandLogoVariantInput {
     @Field(() => String)
     logoVariant!: string;
 }
+
+@InputType()
+export class BrandStatusInput {
+    @Field(() => String)
+    status!: string;
+}

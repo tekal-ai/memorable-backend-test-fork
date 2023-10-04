@@ -1,6 +1,9 @@
 {
     "_id": "7a21206d-6833-492d-bf04-8be56301ec57",
-    "name": "Local Dev",
+    "client": "Thunder Client",
+    "environmentName": "Local Dev",
+    "version": "1.0",
+    "variables": [],
     "default": true,
     "sortNum": 10000,
     "created": "2023-07-03T09:39:57.955Z",

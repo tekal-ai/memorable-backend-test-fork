@@ -1,8 +1,10 @@
 {
     "_id": "bdfbad21-e244-4370-bf29-ebc7989769c1",
-    "colName": "memorable-test",
+    "client": "Thunder Client",
+    "collectionName": "memorable-test",
     "created": "2023-07-03T09:31:31.740Z",
     "sortNum": 10000,
+    "version": "1.1",
     "folders": [],
     "requests": [
         {
@@ -143,6 +145,58 @@
                 "graphql": {
                     "query": "mutation updateBrand($brandId: String!, $brand: UpdateBrandInput!){\n    updateBrand(brandId: $brandId, input: $brand){\n        id,\n        name,\n        createdAt,\n        logoUrl,\n        sector,\n    }\n}",
                     "variables": "{\n  \"brand\": {\n    \"name\": \"Pharma Global\",\n    \"logoUrl\":\"logoUrl\",\n    \"sector\": [\"Utilities\"]\n    \n  },\n  \"brandId\": \"01H2Q81MZ45Y2FVD2KB0SDTMXR\"\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "name": "update brand status",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-09-24T19:42:36.064Z",
+            "modified": "2023-09-24T19:44:08.438Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrandStatus($brandId: String!, $input: BrandStatusInput!){\n    updateBrandStatus(brandId: $brandId, input: $input){\n        id,\n    }\n}",
+                    "variables": "{\n  \"input\": {\n    \"status\": \"DATA_READY\"\n    \n  },\n  \"brandId\": \"01H4618V8XGS613BS5BSPZP180\"\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "name": "update brand status invalid",
+            "url": "{{baseUrl}}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-09-24T19:42:36.064Z",
+            "modified": "2023-09-24T19:44:08.438Z",
+            "headers": [
+                {
+                    "name": "authorization",
+                    "value": "Bearer {{token}}"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation updateBrandStatus($brandId: String!, $input: BrandStatusInput!){\n    updateBrandStatus(brandId: $brandId, input: $input){\n        id,\n    }\n}",
+                    "variables": "{\n  \"input\": {\n    \"status\": \"INVALID_STATUS\"\n    \n  },\n  \"brandId\": \"01H4618V8XGS613BS5BSPZP180\"\n}"
                 }
             },
             "tests": []
