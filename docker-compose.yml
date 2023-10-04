@@ -4,7 +4,7 @@ services:
         image: mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: test_db
+            MYSQL_DATABASE: test_memorable_db
         ports:
             - "3307:3306"
         command: ["mysqld", "--character-set-server=latin1", "--collation-server=latin1_swedish_ci"]
