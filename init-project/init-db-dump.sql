@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: test_schema
+-- Host: 127.0.0.1    Database: test_db
 -- ------------------------------------------------------
 -- Server version	8.0.31
 
@@ -18,7 +18,7 @@
 --
 -- Dumping data for table `brand`
 --
-use test_schema;
+use test_db;
 LOCK TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
 INSERT INTO `brand` VALUES ('01H4618V8XGS613BS5BSPZP180','2023-06-30 11:33:32.580809','2023-06-30 11:33:32.580809','Pharma Tecnologies','logoUrl','01H4616SGMFZ1GX71ZG5DCZMFD','PharmaceuticalsAndBiotechnology',NULL,NULL);

@@ -66,6 +66,7 @@ type Brand {
   updatedAt: DateTime!
   name: String!
   logoUrl: String
+  status: String!
   sector: [Sector!]
   adAccounts: [String!]
   socialAccounts: [String!]
@@ -185,6 +186,15 @@ input UpdateBrandInput {
   name: String
   logoUrl: String
   sector: [Sector!]
+  status: BrandStatus
+}
+
+"""Brand Status"""
+enum BrandStatus {
+  IN_PROGRESS
+  DATA_READY
+  MODEL_TRAINING
+  READY
 }
 
 input BrandAssetsInput {
